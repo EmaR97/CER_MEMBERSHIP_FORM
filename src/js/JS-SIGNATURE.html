@@ -1,0 +1,72 @@
+<!-- JavaScript to handle signature pad, clearing, and uploading -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
+
+<script>
+  /**
+   * Initializes a jQuery-based signature pad and sets up click handlers
+   * for saving and clearing the signature.
+   */
+  $(function() {
+    // Initialize the signature pad with transparent background and black color for lines
+    const $sig = $("#signature").jSignature({
+      'background-color': 'transparent',
+      'decor-color': 'black'
+    });
+
+    /**
+     * Converts a Base64-encoded string into a Blob object.
+     *
+     * @param {string} b64 - The Base64-encoded string.
+     * @param {string} [type=''] - The MIME type of the resulting Blob (default is an empty string).
+     * @returns {Blob} The Blob object created from the Base64 data.
+     */
+    const b64toBlob = (b64, type = '') => {
+      const byteCharacters = atob(b64); // Decodes the Base64 string
+      const byteArrays = [];
+
+      // Convert the decoded Base64 string into a Uint8Array in chunks
+      for (let i = 0; i < byteCharacters.length; i += 512) {
+        const slice = byteCharacters.slice(i, i + 512);
+        const byteNumbers = Array.from(slice, char => char.charCodeAt(0));
+        byteArrays.push(new Uint8Array(byteNumbers));
+      }
+
+      return new Blob(byteArrays, { type }); // Create a Blob from the byte arrays
+    };
+
+    /**
+     * Event handler for the "Save Signature" button click.
+     * Converts the signature from the pad into a PNG image and adds it to a file input.
+     */
+    $("#save-signature").click(() => {
+      // Get the Base64-encoded data from the signature pad
+      const base64 = $sig.jSignature('getData', 'default').split(',')[1];
+
+      // Convert the Base64 data to a Blob representing a PNG image
+      const blob = b64toBlob(base64, 'image/png');
+
+      // Create a File object from the Blob
+      const file = new File([blob], "signature.png", { type: 'image/png' });
+
+      // Use a DataTransfer object to assign the file to the input field
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+
+      // Set the files property of the input element to the file created
+      $("#signature-file")[0].files = dataTransfer.files;
+
+      console.log("Signature Saved"); // Log that the signature has been saved
+    });
+
+    /**
+     * Event handler for the "Clear Signature" button click.
+     * Resets the signature pad, clearing any existing signature.
+     */
+    $("#clear-signature").click(() => {
+      $sig.jSignature("reset"); // Clears the signature pad
+
+      console.log("Signature Cleared"); // Log that the signature has been cleared
+    });
+  });
+</script>

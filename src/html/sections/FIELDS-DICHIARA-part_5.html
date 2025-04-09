@@ -1,0 +1,51 @@
+<div class="col-md-12 row g-3">
+  <label class="form-label col-md-10">5. Dichiara che sul POD sopra indicato già esiste un impianto fotovoltaico:</label>
+  <div class="form-check col-md-1">
+    <input class="form-check-input" type="radio" name="existing-plant" id="plant-yes" value="SI" required>
+    <label class="form-check-label" for="plant-yes">SI</label>
+  </div>
+  <div class="form-check col-md-1">
+    <input class="form-check-input" type="radio" name="existing-plant" id="plant-no" value="NO" required>
+    <label class="form-check-label" for="plant-no">NO</label>
+  </div>
+
+  <div class="col-md-12 row ms-3 g-3" id="plant-info">
+    <div class="col-md-12">
+      <!-- Date input for connection date -->
+      <label class="form-label" for="connection-date">Specificare la data di allacciamento alla rete dell'impianto</label>
+      <input type="date" class="form-control" id="connection-date" name="connection-date" required disabled>
+    </div>
+
+    <div class="col-md-12">
+      <!-- Text input for peak power in kWp -->
+      <label class="form-label" for="peak-power">Specificare potenza di picco installata in kWp</label>
+      <input type="number" class="form-control" id="peak-power" min="0"name="peak-power" required disabled>
+    </div>
+
+    <div class="col-md-12">
+      <!-- File upload for the bill -->
+      <label class="form-label" for="electricity-bill-production">Allegare copia della bolletta dell’impianto di produzione (dati riepilogo degli ultimi 12 mesi)</label>
+      <input type="file" class="form-control" id="electricity-bill-production" name="electricity-bill-production" required disabled>
+    </div>
+
+    <div class="col-md-12 row g-3">
+      <!-- Radio buttons for GSE incentive -->
+      <label class="form-label  col-md-10">Sono presenti convenzioni attive di incentivo con il GSE:</label>
+      <div class="form-check col-md-1">
+        <input class="form-check-input" type="radio" name="gse-incentive" id="incentive-yes" value="SI" required disabled>
+        <label class="form-check-label" for="incentive-yes">SI</label>
+      </div>
+      <div class="form-check col-md-1">
+        <input class="form-check-input" type="radio" name="gse-incentive" id="incentive-no" value="NO" required disabled>
+        <label class="form-check-label" for="incentive-no">NO</label>
+      </div>
+      <div class="col-md-12 ms-3" id="incentive-info">
+        <!-- Text input to specify active conventions if GSE incentive is present -->
+        <label class="form-label" for="incentive-details">Se si, specificare le convenzioni attive:</label>
+        <input type="text" class="form-control" id="incentive-details" name="incentive-details"required disabled>
+      </div>
+    </div>
+
+
+  </div>
+</div>

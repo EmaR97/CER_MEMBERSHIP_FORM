@@ -1,0 +1,29 @@
+<div class="col-md-12 row g-3">
+    <label class="form-label">3. Dichiara che all’interno della Comunità Energetica Rinnovabile assumerà il ruolo di (scegliere un’opzione):</label>
+    <div class="col-md-12 row ms-3 g-3">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="user-role" id="user-role-1" value="Consumatore"  required>
+            <label class="form-check-label" for="user-role-1">Consumatore (utente senza impianto fotovoltaico o rinnovabile di altro tipo)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="user-role" id="user-role-2" value="Prosumer"  required>
+            <label class="form-check-label" for="user-role-2">Prosumer (produttore/consumatore: utente consumatore con impianto fotovoltaico)</label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="user-role" id="user-role-3" value="Produttore puro"  required>
+            <label class="form-check-label" for="user-role-3">Produttore puro (utente non consumatore con impianto fotovoltaico o rinnovabile di altro tipo)</label>
+        </div>
+        <div class="row">
+            <!-- Ensures elements are aligned horizontally -->
+            <div class="form-check col-md-4">
+                <!-- Sets the correct column width -->
+                <input class="form-check-input" type="radio" name="user-role" id="user-role-4" value="Altro" required>
+                <label class="form-check-label" for="user-role-4">Altro (da specificare):</label>
+            </div>
+            <div class="col-md-8" id="user-role-other" >
+                <!-- Matches the total width to stay in the same row -->
+                <input type="text" name="user-role-other" class="form-control" placeholder="Specificare il ruolo" disabled required>
+            </div>
+        </div>
+    </div>
+</div>

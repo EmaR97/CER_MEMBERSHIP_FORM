@@ -1,0 +1,70 @@
+<div class="col-md-12 row g-3">
+    <p>4. Dichiara di essere titolare di un contratto di fornitura di energia elettrica con le seguenti caratteristiche:</p>
+    <div class="col-md-12 row ms-3 g-3">
+        <div class="col-md-12">
+            <label for="pod-code" class="form-label">Codice POD</label>
+            <input type="text" name="pod-code" id="pod-code" class="form-control" placeholder="Es: IT001E00000000" required>
+            <small class="form-text text-muted"> Riportare Codice alfanumerico composto da 14 o 15 cifre che identifica il contatore</small>
+        </div>
+
+        <div class="col-md-12">
+            <label class="form-label">Tipologia di utenza</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pod-type" id="residential-resident" value="Domestico Residente" required>
+                <label class="form-check-label" for="residential-resident">Domestico Residente</label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="pod-type" id="residential-non-resident" value="Domestico Non Residente">
+                <label class="form-check-label" for="residential-non-resident">Domestico Non Residente</label>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-check ">
+                        <input class="form-check-input" type="radio" name="pod-type" id="other-uses" value="Altri Usi">
+                        <label class="form-check-label" for="other-uses">Altri Usi (specificare attività):</label>
+                    </div>
+                </div>
+                <div class="col-md-8"id="pod-type-other" >
+                    <input type="text" name="pod-type-other" class="form-control" placeholder="laboratorio, negozio ..." disabled required>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <label for="electricity-address-city" class="form-label">Comune della fornitura elettrica</label>
+            <input type="text" name="electricity-address-city" id="electricity-address-city" class="form-control" required>
+        </div>
+        <div class="col-md-8">
+            <label for="electricity-address" class="form-label">Indirizzo della fornitura elettrica</label>
+            <input type="text" name="electricity-address" id="electricity-address" class="form-control" placeholder="Es: Via Don Bosco, 22" required>
+        </div>
+        <div class="col-md-6">
+            <label for="committed-power" class="form-label">Potenza impegnata (kW)</label>
+            <input type="number" name="committed-power" id="committed-power" class="form-control" min="0" required>
+        </div>
+        <div class="col-md-6">
+            <label for="total-usage" class="form-label">Totale (kWh/anno)</label>
+            <input type="number" name="total-usage" id="total-usage" class="form-control" min="0" required>
+        </div>
+        <div class="col-md-4">
+            <label for="f1-usage" class="form-label">Fascia F1 (kWh/anno)</label>
+            <input type="number" name="f1-usage" id="f1-usage" class="form-control" min="0">
+        </div>
+
+        <div class="col-md-4">
+            <label for="f2-usage" class="form-label">Fascia F2 (kWh/anno)</label>
+            <input type="number" name="f2-usage" id="f2-usage" class="form-control" min="0">
+        </div>
+
+        <div class="col-md-4">
+            <label for="f3-usage" class="form-label">Fascia F3 (kWh/anno)</label>
+            <input type="number" name="f3-usage" id="f3-usage" class="form-control" min="0">
+        </div>
+
+        <div class="col-md-12">
+            <label for="electricity-bill" class="form-label">Fattura fornitura di energia elettrica</label>
+            <input type="file" name="electricity-bill" id="electricity-bill" class="form-control" required>
+            <small class="form-text text-muted">Allegare copia di una recente fattura di fornitura di energia elettrica (completa di tutte le pagine).</small>
+        </div>
+    </div>
+</div>

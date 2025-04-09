@@ -1,0 +1,65 @@
+<script>
+    /**
+     * This function sets the state of all input elements within a specified section.
+     * Depending on the state of a toggle element, it either disables or enables the inputs.
+     * If disabled, the inputs' values are cleared and placeholders are set to "NON NECESSARIO".
+     *
+     * @param {string} toggleElementId - The ID of the toggle element (typically a checkbox or radio button) that controls the section's state.
+     * @param {string} sectionId - The ID of the section containing the inputs to be manipulated.
+     */
+    function setSectionState(toggleElementId, sectionId) {
+        const inputs = document.getElementById(sectionId)?.querySelectorAll("input") || [];
+        const shouldDisable = !document.getElementById(toggleElementId)?.checked ;
+        inputs.forEach(input => {
+            if (!input.hasAttribute("data-original-placeholder")) {
+                input.setAttribute("data-original-placeholder", input.placeholder|| "");
+            }
+            input.disabled = shouldDisable;
+            if (shouldDisable) {
+                input.value = "";
+                input.placeholder = "NON NECESSARIO";
+            } else {
+                input.placeholder = input.getAttribute("data-original-placeholder") ;
+            }
+        });
+    }
+
+    /**
+     * This function sets up event handlers for toggle elements that control the state of a section.
+     * It listens for changes in the specified toggle elements and updates the section state accordingly.
+     *
+     * @param {string} toggleElementId - The ID of the toggle element that controls the section's state.
+     * @param {string} sectionId - The ID of the section whose state is controlled by the toggle.
+     * @param {string} toggleTriggerName - The name attribute of the toggle elements to be monitored for changes.
+     */
+    function setupToggleHandlers(toggleElementId, sectionId, toggleTriggerName) {
+        // Define a function to update the section state based on the toggle element's state
+        const updateSectionState = () => setSectionState(toggleElementId, sectionId);
+
+        // Set the initial state of the section
+        updateSectionState();
+
+        // Get all elements with the specified name attribute
+        const toggleElements = document.getElementsByName(toggleTriggerName) || [];
+
+        // Add event listeners to each toggle element to update the section state on change
+        toggleElements.forEach(element => {
+            element.addEventListener("change", updateSectionState);
+        });
+    }
+
+    /**
+     * The main setup function executed when the DOM content has loaded.
+     * It sets up toggle handlers for specific toggle elements and sections.
+     */
+    document.addEventListener("DOMContentLoaded", () => {
+        // Setup handlers for various sections with their corresponding toggle elements
+        setupToggleHandlers("plant-yes", "plant-info", "existing-plant");
+        setupToggleHandlers("user-type-organization", "organization-info", "user-type");
+        setupToggleHandlers("new-plant-yes", "new-plant-info", "new-plant");
+        setupToggleHandlers("user-role-4", "user-role-other", "user-role");
+        setupToggleHandlers("incentive-yes", "incentive-info", "gse-incentive");
+        setupToggleHandlers("other-uses", "pod-type-other", "pod-type");
+    });
+
+</script>

@@ -1,0 +1,53 @@
+<script>
+  const storeInputData = (key, value) => sessionStorage.setItem(key, value);
+
+  const emptyInputData = (key) => sessionStorage.removeItem(key);
+
+  const loadIinputData = (key) => sessionStorage.getItem(key);
+
+  function saveFormToSession  (form)  {
+    form?.querySelectorAll("input").forEach(input => {
+      const { id, type, checked, name, value } = input;
+      if (type === "file") {
+        return; // Ignore file inputs
+      }
+
+      if (type === "checkbox") {
+        checked ? storeInputData(id, "true") : emptyInputData(id);
+      } else if (type === "radio" && checked) {
+        form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+          emptyInputData(radio.name);
+        });
+        storeInputData(name, value);
+      } else if (type !== "checkbox" && type !== "radio") {
+        storeInputData(id, value);
+      }
+    });
+  };
+
+  function loadFormFromSession (form)  {
+    form?.querySelectorAll("input").forEach(input => {
+      if (input.type === "file") {
+        return; // Ignore file inputs
+      }
+      const value = loadIinputData(input.id);
+      if (input.type === "checkbox") {
+        input.checked = value === "true";
+      } else if (input.type === "radio") {
+        input.checked = loadIinputData(input.name) === input.value;
+      } else if (value) {
+        input.value = value;
+      }
+    });
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("user-form");
+
+    // Load session data when the DOM is ready
+    loadFormFromSession(form);
+
+    // Save session data when the form changes
+    form?.addEventListener("change", ()=> saveFormToSession(form));
+  });
+</script>

@@ -1,0 +1,842 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <title>Bootstrap demo</title>
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet">
+  <style>
+    .form-control {
+      border-color: #6c757dbf;
+      /* Light gray border */
+    }
+
+    .form-control:disabled {
+      background-color: #6c757dbf;
+      /* Light gray background */
+    }
+
+    #signature {
+      border: 1px #6c757dbf solid
+    }
+  </style>
+  <style>
+    /* Custom styles */
+    .fixed-button {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      /* Ensure it's above other content */
+    }
+  </style>
+  <!-- Styles for the modal -->
+  <style></style>
+</head>
+
+<body>
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8 d-flex flex-column align-items-center text-center">
+      <img src="https://drive.google.com/thumbnail?id=1p0XD561-Yi_o9ZteMzX-AMAtFYo5cxjn&sz">
+      <h1>ADESIONE CER STELLA ARAGONA</h1>
+      <p>RICHIESTA DI ADESIONE ALLA COMUNITÀ ENERGETICA RINNOVABILE CER STELLA ARAGONA</p>
+    </div>
+  </div>
+  <form class="row g-3 mb-5   " id="user-form">
+    <!-- Fields for CREDENZIALI UTENTE -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12">CREDENZIALI UTENTE</h3>
+      <div class="col-md-6">
+        <label class="form-label required" for="first-name">Nome</label>
+        <input class="form-control" id="first-name" name="first-name" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="last-name">Cognome</label>
+        <input class="form-control" id="last-name" name="last-name" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="birthplace">Luogo di nascita</label>
+        <input class="form-control" id="birthplace" name="birthplace" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="birthdate">Data di nascita</label>
+        <input class="form-control" id="birthdate" name="birthdate" required type="date">
+      </div>
+      <div class="col-md-8">
+        <label class="form-label" for="residence-city">Comune di residenza</label>
+        <input class="form-control" id="residence-city" name="residence-city" required type="text">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="residence-province">Provincia di residenza</label>
+        <input class="form-control" id="residence-province" name="residence-province" required type="text">
+      </div>
+      <div class="col-md-8">
+        <label class="form-label" for="residence-street">Via di residenza</label>
+        <input class="form-control" id="residence-street" name="residence-street" required type="text">
+      </div>
+      <div class="col-md-4">
+        <label class="form-label" for="civic-number">Numero Civico</label>
+        <input class="form-control" id="civic-number" min="0" name="civic-number" required type="number">
+      </div>
+      <div class="col-md-12">
+        <label class="form-label" for="fiscal-code">Codice Fiscale</label>
+        <input class="form-control" id="fiscal-code" name="fiscal-code" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="phone-number">Numero di telefono</label>
+        <input class="form-control" id="phone-number" name="phone-number" required type="tel">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="email">Email</label>
+        <input class="form-control" id="email" name="email" required type="email">
+      </div>
+      <div class="col-md-12">
+        <label class="form-label" for="identity-doc">Allegare copia del documento di riconoscimento in corso di
+          validità
+        </label>
+        <input class="form-control" id="identity-doc" name="identity-doc" required type="file">
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Tipologia utente</label>
+        <div class="form-check">
+          <input class="form-check-input" id="user-type-individual" name="user-type" required type="radio"
+                 value="Persone fisiche">
+          <label class="form-check-label" for="user-type-individual">Persone fisiche</label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" id="user-type-organization" name="user-type" required type="radio"
+                 value="organization">
+          <label class="form-check-label" for="user-type-organization">Impresa / ente / associazione</label>
+        </div>
+      </div>
+    </div>
+    <!-- Fields for IMPRESA / ENTE / ASSOCIAZIONE -->
+    <div class="row g-3  mb-5" id="organization-info">
+      <h3 class="col-md-12">IN CASO DI IMPRESA / ENTE / ASSOCIAZIONE</h3>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-role">Carica all'interno dell'organizzazione</label>
+        <input class="form-control" id="organization-role" name="organization-role" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-name">Nome dell'organizzazione</label>
+        <input class="form-control" id="organization-name" name="organization-name" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-location">Sede dell'organizzazione</label>
+        <input class="form-control" id="organization-location" name="organization-location" required
+               type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-fiscal-code">Cod. Fisc dell'organizzazione</label>
+        <input class="form-control" id="organization-fiscal-code" name="organization-fiscal-code" required
+               type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-vat">Partita IVA</label>
+        <input class="form-control" id="organization-vat" name="organization-vat" required type="text">
+      </div>
+      <div class="col-md-6">
+        <label class="form-label" for="organization-pec">PEC</label>
+        <input class="form-control" id="organization-pec" name="organization-pec" required type="email">
+      </div>
+      <div class="col-md-12">
+        <label class="form-label" for="chamber-doc">Allegare copia visura camerale aggiornata</label>
+        <input class="form-control" id="chamber-doc" name="chamber-doc" required type="file">
+      </div>
+    </div>
+    <!-- Fields for CHIEDE -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12 ">CHIEDE</h3>
+      <p class="col-md-12 ">Chiede di essere ammesso in qualità di socio, alla Comunità Energetica Rinnovabile
+        (CER) denominata CER Stella Aragona, costituita in forma di Associazione ascrivibile
+        ad Ente del Terzo Settore.</p>
+      <p class="col-md-12 ">Inoltre, consapevole delle sanzioni penali cui può andare incontro in caso di
+        dichiarazioni mendaci, del fatto che, in caso di presentazione di documenti falsi o
+        non più rispondenti alla realtà, decadrebbe immediatamente dall’eventuale beneficio
+        acquisito, che nelle ipotesi di falsità in atti e dichiarazioni mendaci si applicano
+        le sanzioni penali previste dall’art.76 del D.P.R n° 445 28.12.2000</p>
+    </div>
+    <!-- Fields for DICHIARA -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12">DICHIARA</h3>
+      <div class="col-md-12  g-3">
+        <p>1. Dichiara di aver letto e accettato lo statuto della CER e i Regolamenti interni e di essere quindi
+          a conoscenza dei vantaggi derivanti dall’appartenenza alla CER, in special modo di quelli derivanti
+          dalla ripartizione tra gli associati del contributo incentivante erogato dal GSE;</p>
+      </div>
+      <div class="col-md-12 g-3">
+        <p>2. Dichiara di essere consapevole che la presentazione della candidatura sarà soggetta a controllo
+          sulla sussistenza dei requisiti di cui alla disciplina normativa e regolamentare relativa alle
+          comunità di energia rinnovabile;</p>
+      </div>
+      <!-- Fields for DICHIARA-part_3 -->
+      <div class="col-md-12 row g-3">
+        <label class="form-label">3. Dichiara che all’interno della Comunità Energetica Rinnovabile assumerà il
+          ruolo di (scegliere un’opzione):
+        </label>
+        <div class="col-md-12 ms-3 g-3">
+          <div class="form-check">
+            <input class="form-check-input" id="user-role-1" name="user-role" required type="radio"
+                   value="Consumatore">
+            <label class="form-check-label" for="user-role-1">Consumatore (utente senza impianto
+              fotovoltaico o rinnovabile di altro tipo)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="user-role-2" name="user-role" required type="radio"
+                   value="Prosumer">
+            <label class="form-check-label" for="user-role-2">Prosumer (produttore/consumatore: utente
+              consumatore con impianto fotovoltaico)
+            </label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" id="user-role-3" name="user-role" required type="radio"
+                   value="Produttore puro">
+            <label class="form-check-label" for="user-role-3">Produttore puro (utente non consumatore con
+              impianto fotovoltaico o rinnovabile di altro
+              tipo)
+            </label>
+          </div>
+          <div class="row align-items-center me-0">
+            <!-- Ensures elements are aligned horizontally -->
+            <div class=" col-md-4">
+              <!-- Sets the correct column width -->
+              <input class="form-check-input" id="user-role-4" name="user-role" required type="radio"
+                     value="Altro">
+              <label class="form-check-label" for="user-role-4">Altro (da specificare):</label>
+            </div>
+            <div class="col-md-8" id="user-role-other">
+              <!-- Matches the total width to stay in the same row -->
+              <input class="form-control" disabled name="user-role-other"
+                     placeholder="Specificare il ruolo" required type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fields for DICHIARA-part_4 -->
+      <div class="col-md-12 row g-3">
+        <p>4. Dichiara di essere titolare di un contratto di fornitura di energia elettrica con le seguenti
+          caratteristiche:</p>
+        <div class="col-md-12 row ms-3 g-3">
+          <div class="col-md-12">
+            <label for="pod-code" class="form-label">Codice POD</label>
+            <input type="text" name="pod-code" id="pod-code" class="form-control" placeholder="Es: IT001E00000000" required>
+            <small class="form-text text-muted"> Riportare Codice alfanumerico composto da 14 o 15 cifre che identifica il contatore</small>
+          </div>
+
+          <div class="col-md-12">
+            <label class="form-label">Tipologia di utenza</label>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pod-type" id="residential-resident" value="Domestico Residente" required>
+              <label class="form-check-label" for="residential-resident">Domestico Residente</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="pod-type" id="residential-non-resident" value="Domestico Non Residente">
+              <label class="form-check-label" for="residential-non-resident">Domestico Non Residente</label>
+            </div>
+            <div class="row align-items-center">
+              <div class="col-md-4">
+                <div class="form-check ">
+                  <input class="form-check-input" type="radio" name="pod-type" id="other-uses" value="Altri Usi">
+                  <label class="form-check-label" for="other-uses">Altri Usi (specificare attività):</label>
+                </div>
+              </div>
+              <div class="col-md-8" id="pod-type-other">
+                <input type="text" name="pod-type-other" class="form-control" placeholder="laboratorio, negozio ..." disabled required>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <label for="electricity-address-city" class="form-label">Comune della fornitura elettrica</label>
+            <input type="text" name="electricity-address-city" id="electricity-address-city" class="form-control" required>
+          </div>
+          <div class="col-md-8">
+            <label for="electricity-address" class="form-label">Indirizzo della fornitura elettrica</label>
+            <input type="text" name="electricity-address" id="electricity-address" class="form-control" placeholder="Es: Via Don Bosco, 22" required>
+          </div>
+          <div class="col-md-6">
+            <label for="committed-power" class="form-label">Potenza impegnata (kW)</label>
+            <input type="number" name="committed-power" id="committed-power" class="form-control" min="0" required>
+          </div>
+          <div class="col-md-6">
+            <label for="total-usage" class="form-label">Totale (kWh/anno)</label>
+            <input type="number" name="total-usage" id="total-usage" class="form-control" min="0" required>
+          </div>
+          <div class="col-md-4">
+            <label for="f1-usage" class="form-label">Fascia F1 (kWh/anno)</label>
+            <input type="number" name="f1-usage" id="f1-usage" class="form-control" min="0">
+          </div>
+
+          <div class="col-md-4">
+            <label for="f2-usage" class="form-label">Fascia F2 (kWh/anno)</label>
+            <input type="number" name="f2-usage" id="f2-usage" class="form-control" min="0">
+          </div>
+
+          <div class="col-md-4">
+            <label for="f3-usage" class="form-label">Fascia F3 (kWh/anno)</label>
+            <input type="number" name="f3-usage" id="f3-usage" class="form-control" min="0">
+          </div>
+
+          <div class="col-md-12">
+            <label for="electricity-bill" class="form-label">Fattura fornitura di energia elettrica</label>
+            <input type="file" name="electricity-bill" id="electricity-bill" class="form-control" required>
+            <small class="form-text text-muted">Allegare copia di una recente fattura di fornitura di energia elettrica (completa di tutte le pagine).</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fields for DICHIARA-part_5 -->
+      <div class="col-md-12 row g-3">
+        <label class="form-label col-md-10">5. Dichiara che sul POD sopra indicato già esiste un impianto
+          fotovoltaico:
+        </label>
+        <div class="form-check col-md-1">
+          <input class="form-check-input" id="plant-yes" name="existing-plant" required type="radio"
+                 value="SI">
+          <label class="form-check-label" for="plant-yes">SI</label>
+        </div>
+        <div class="form-check col-md-1">
+          <input class="form-check-input" id="plant-no" name="existing-plant" required type="radio"
+                 value="NO">
+          <label class="form-check-label" for="plant-no">NO</label>
+        </div>
+        <div class="col-md-12 row ms-3 g-3" id="plant-info">
+          <div class="col-md-12">
+            <!-- Date input for connection date -->
+            <label class="form-label" for="connection-date">Specificare la data di allacciamento alla rete
+              dell'impianto
+            </label>
+            <input class="form-control" disabled id="connection-date" name="connection-date" required
+                   type="date">
+          </div>
+          <div class="col-md-12">
+            <!-- Text input for peak power in kWp -->
+            <label class="form-label" for="peak-power">Specificare potenza di picco installata in kWp
+            </label>
+            <input class="form-control" disabled id="peak-power" min="0" name="peak-power" required
+                   type="number">
+          </div>
+          <div class="col-md-12">
+            <!-- File upload for the bill -->
+            <label class="form-label" for="electricity-bill-production">Allegare copia della bolletta
+              dell’impianto di produzione (dati
+              riepilogo degli ultimi 12 mesi)
+            </label>
+            <input class="form-control" disabled id="electricity-bill-production"
+                   name="electricity-bill-production" required type="file">
+          </div>
+          <div class="col-md-12 row g-3">
+            <!-- Radio buttons for GSE incentive -->
+            <label class="form-label  col-md-10">Sono presenti convenzioni attive di incentivo con il GSE:
+            </label>
+            <div class="form-check col-md-1">
+              <input class="form-check-input" disabled id="incentive-yes" name="gse-incentive" required
+                     type="radio" value="SI">
+              <label class="form-check-label" for="incentive-yes">SI</label>
+            </div>
+            <div class="form-check col-md-1">
+              <input class="form-check-input" disabled id="incentive-no" name="gse-incentive" required
+                     type="radio" value="NO">
+              <label class="form-check-label" for="incentive-no">NO</label>
+            </div>
+            <div class="col-md-12 ms-3" id="incentive-info">
+              <!-- Text input to specify active conventions if GSE incentive is present -->
+              <label class="form-label" for="incentive-details">Se si, specificare le convenzioni attive:
+              </label>
+              <input class="form-control" disabled id="incentive-details" name="incentive-details"
+                     required type="text">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Fields for DICHIARA-part_6 -->
+      <div class="col-md-12 row g-3">
+        <label class="form-label col-md-10">6. Dichiara di essere disponibile ad installare un nuovo impianto
+          fotovoltaico.
+        </label>
+        <div class="form-check col-md-1">
+          <input class="form-check-input" id="new-plant-yes" name="new-plant" required type="radio"
+                 value="SI">
+          <label class="form-check-label" for="new-plant-yes">SI</label>
+        </div>
+        <div class="form-check col-md-1">
+          <input class="form-check-input" id="new-plant-no" name="new-plant" required type="radio" value="NO">
+          <label class="form-check-label" for="new-plant-no">NO</label>
+        </div>
+        <div class="col-md-12 row ms-3 g-3">
+          <div class="col-md-12" id="new-plant-info">
+            <!-- Date input for connection date -->
+            <label class="form-label" for="avialable-surface">Specificare la superficie disponibile in metri
+              quadri
+            </label>
+            <input class="form-control" id="avialable-surface" min="0" name="avialable-surface"
+                   type="number">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12 g-3">
+        <p>7. Dichiara di impegnarsi a versare la quota associativa annuale di € 20,00 mediante il pagamento con
+          contanti, alla consegna del presente modulo o per mezzo di bonifico bancario</p>
+      </div>
+    </div>
+    <!-- Fields for AUTORIZZA -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12 ">AUTORIZZA</h3>
+      <p class="col-md-12 ">Autorizza la CER Stella Aragona al trattamento dei dati nell’ambito delle attività̀
+        istituzionali ovvero per l’espletamento delle proprie funzioni ai sensi degli artt. 13
+        e 14 del GDPR - Regolamento UE 2016/679 - In particolare, dichiara di aver preso
+        visione dell’informativa allegata e autorizza il trattamento e l’utilizzo dei dati
+        forniti.</p>
+      <p class="col-md-12 ">Autorizza la CER Stella Aragona al trattamento dei dati personali (POD), in conformità
+        alla vigente normativa sulla “data protection” (Regolamento Europeo, sulla protezione
+        dei dati personali n. 679/2016, cd “GDPR” e D. Lgs. , n 196/2003, cd, “Codice
+        Privacy”, come novellato dal D. Lgs. n 101/2018)</p>
+    </div>
+    <!-- Fields for INFORMATIVA SULLA PRIVACY -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12">INFORMATIVA SULLA PRIVACY</h3>
+      <a href="https://drive.google.com/file/d/1lARtIQAVfru2c6iLz3dFg5fJiSmtq0WV/view?usp=sharing" target="_blank">
+        INFORMATIVA SULLA PRIVACY AI SENSI DEL ART. 13 REGOLAMENTO UE 679/2016
+      </a>
+      <label class="form-label col-md-12">Esprime il consenso al trattamento dei miei dati personali:</label>
+      <div class="row col-md-12 ms-3">
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="personal-consent-yes" name="personal-consent" required
+                 type="radio" value="SI">
+          <label class="form-check-label" for="personal-consent-yes">Acconsento</label>
+        </div>
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="personal-consent-no" name="personal-consent" required
+                 type="radio" value="NO">
+          <label class="form-check-label" for="personal-consent-no">NON acconsento</label>
+        </div>
+      </div>
+      <label class="form-label col-md-12">Esprime il consenso alla comunicazione dei miei dati personali ad enti
+        pubblici e società di natura privata per le finalità indicate
+        nell’informativa:
+      </label>
+      <div class="row col-md-12 ms-3">
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="communication-consent-yes" name="communication-consent" required
+                 type="radio" value="SI">
+          <label class="form-check-label" for="communication-consent-yes">Acconsento</label>
+        </div>
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="communication-consent-no" name="communication-consent" required
+                 type="radio" value="NO">
+          <label class="form-check-label" for="communication-consent-no">NON acconsento</label>
+        </div>
+      </div>
+      <label class="form-label col-md-12">Esprime il consenso al trattamento delle categorie particolari dei miei
+        dati personali così come indicati nell’informativa che precede:
+      </label>
+      <div class="row col-md-12 ms-3">
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="special-data-consent-yes" name="special-data-consent" required
+                 type="radio" value="SI">
+          <label class="form-check-label" for="special-data-consent-yes">Acconsento</label>
+        </div>
+        <div class="form-check col-md-6">
+          <input class="form-check-input" id="special-data-consent-no" name="special-data-consent" required
+                 type="radio" value="NO">
+          <label class="form-check-label" for="special-data-consent-no">NON acconsento</label>
+        </div>
+      </div>
+      <input id="date" name="date" required type="hidden">
+    </div>
+    <!-- Fields for SIGNATURE -->
+    <div class="row g-3  mb-5">
+      <h3 class="col-md-12">FIRMA</h3>
+      <div class="col-md-12">
+        <label class="form-label" for="signature-file">Allegare un immagine della propria firma o utillzare la
+          tab sottostante per produrne una nuova
+        </label>
+        <input class="form-control" id="signature-file" name="signature-file" required type="file">
+        <div id="signature"></div>
+        <img id="rendered" src="" style="display:none">
+      </div>
+      <div class=" ms-0 row">
+        <button class="col-md-6 btn btn-secondary" id="clear-signature" type="button">Cancella Firma</button>
+        <button class="col-md-6 btn btn-success" id="save-signature" type="button">Salva Firma</button>
+      </div>
+    </div>
+    <div class="col-md-12 row justify-content-center">
+
+      <button class="col-md-6 btn btn-primary" type="submit">Invia</button>
+    </div>
+  </form>
+</div>
+<!-- Modal -->
+<div aria-hidden="true" aria-labelledby="staticBackdropLabel" class="modal fade" data-bs-backdrop="static"
+     data-bs-keyboard="false" id="MessageModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header" id="modal-header" style="display: none">
+        <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+      </div>
+      <div class="modal-body  text-center" id="modal-message">
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+<script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- JS-restore_responses -->
+<script>
+  const storeInputData = (key, value) => sessionStorage.setItem(key, value);
+
+  const emptyInputData = (key) => sessionStorage.removeItem(key);
+
+  const loadIinputData = (key) => sessionStorage.getItem(key);
+
+  function saveFormToSession(form) {
+    form?.querySelectorAll("input").forEach(input => {
+      const {id, type, checked, name, value} = input;
+      if (type === "file") {
+        return; // Ignore file inputs
+      }
+
+      if (type === "checkbox") {
+        checked ? storeInputData(id, "true") : emptyInputData(id);
+      } else if (type === "radio" && checked) {
+        form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+          emptyInputData(radio.name);
+        });
+        storeInputData(name, value);
+      } else if (type !== "checkbox" && type !== "radio") {
+        storeInputData(id, value);
+      }
+    });
+  }
+
+  function loadFormFromSession(form) {
+    form?.querySelectorAll("input").forEach(input => {
+      if (input.type === "file") {
+        return; // Ignore file inputs
+      }
+      const value = loadIinputData(input.id);
+      if (input.type === "checkbox") {
+        input.checked = value === "true";
+      } else if (input.type === "radio") {
+        input.checked = loadIinputData(input.name) === input.value;
+      } else if (value) {
+        input.value = value;
+      }
+    });
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("user-form");
+
+    // Load session data when the DOM is ready
+    loadFormFromSession(form);
+
+    // Save session data when the form changes
+    form?.addEventListener("change", () => saveFormToSession(form));
+  });
+</script>
+<!-- JS-sectionToggle -->
+<script>
+  /**
+   * This function sets the state of all input elements within a specified section.
+   * Depending on the state of a toggle element, it either disables or enables the inputs.
+   * If disabled, the inputs' values are cleared and placeholders are set to "NON NECESSARIO".
+   *
+   * @param {string} toggleElementId - The ID of the toggle element (typically a checkbox or radio button) that controls the section's state.
+   * @param {string} sectionId - The ID of the section containing the inputs to be manipulated.
+   */
+  function setSectionState(toggleElementId, sectionId) {
+    const inputs = document.getElementById(sectionId)?.querySelectorAll("input") || [];
+    const shouldDisable = !document.getElementById(toggleElementId)?.checked;
+    inputs.forEach(input => {
+      if (!input.hasAttribute("data-original-placeholder")) {
+        input.setAttribute("data-original-placeholder", input.placeholder || "");
+      }
+      input.disabled = shouldDisable;
+      if (shouldDisable) {
+        input.value = "";
+        input.placeholder = "NON NECESSARIO";
+      } else {
+        input.placeholder = input.getAttribute("data-original-placeholder");
+      }
+    });
+  }
+
+  /**
+   * This function sets up event handlers for toggle elements that control the state of a section.
+   * It listens for changes in the specified toggle elements and updates the section state accordingly.
+   *
+   * @param {string} toggleElementId - The ID of the toggle element that controls the section's state.
+   * @param {string} sectionId - The ID of the section whose state is controlled by the toggle.
+   * @param {string} toggleTriggerName - The name attribute of the toggle elements to be monitored for changes.
+   */
+  function setupToggleHandlers(toggleElementId, sectionId, toggleTriggerName) {
+    // Define a function to update the section state based on the toggle element's state
+    const updateSectionState = () => setSectionState(toggleElementId, sectionId);
+
+    // Set the initial state of the section
+    updateSectionState();
+
+    // Get all elements with the specified name attribute
+    const toggleElements = document.getElementsByName(toggleTriggerName) || [];
+
+    // Add event listeners to each toggle element to update the section state on change
+    toggleElements.forEach(element => {
+      element.addEventListener("change", updateSectionState);
+    });
+  }
+
+  /**
+   * The main setup function executed when the DOM content has loaded.
+   * It sets up toggle handlers for specific toggle elements and sections.
+   */
+  document.addEventListener("DOMContentLoaded", () => {
+    // Setup handlers for various sections with their corresponding toggle elements
+    setupToggleHandlers("plant-yes", "plant-info", "existing-plant");
+    setupToggleHandlers("user-type-organization", "organization-info", "user-type");
+    setupToggleHandlers("new-plant-yes", "new-plant-info", "new-plant");
+    setupToggleHandlers("user-role-4", "user-role-other", "user-role");
+    setupToggleHandlers("incentive-yes", "incentive-info", "gse-incentive");
+    setupToggleHandlers("other-uses", "pod-type-other", "pod-type");
+  });
+</script>
+<!-- JS-SIGNATURE -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
+<script>
+  /**
+   * Initializes a jQuery-based signature pad and sets up click handlers
+   * for saving and clearing the signature.
+   */
+  $(function () {
+    // Initialize the signature pad with transparent background and black color for lines
+    const $sig = $("#signature").jSignature({
+      'background-color': 'transparent',
+      'decor-color': 'black'
+    });
+
+    /**
+     * Converts a Base64-encoded string into a Blob object.
+     *
+     * @param {string} b64 - The Base64-encoded string.
+     * @param {string} [type=''] - The MIME type of the resulting Blob (default is an empty string).
+     * @returns {Blob} The Blob object created from the Base64 data.
+     */
+    const b64toBlob = (b64, type = '') => {
+      const byteCharacters = atob(b64); // Decodes the Base64 string
+      const byteArrays = [];
+
+      // Convert the decoded Base64 string into a Uint8Array in chunks
+      for (let i = 0; i < byteCharacters.length; i += 512) {
+        const slice = byteCharacters.slice(i, i + 512);
+        const byteNumbers = Array.from(slice, char => char.charCodeAt(0));
+        byteArrays.push(new Uint8Array(byteNumbers));
+      }
+
+      return new Blob(byteArrays, {type}); // Create a Blob from the byte arrays
+    };
+
+    /**
+     * Event handler for the "Save Signature" button click.
+     * Converts the signature from the pad into a PNG image and adds it to a file input.
+     */
+    $("#save-signature").click(() => {
+      // Get the Base64-encoded data from the signature pad
+      const base64 = $sig.jSignature('getData', 'default').split(',')[1];
+
+      // Convert the Base64 data to a Blob representing a PNG image
+      const blob = b64toBlob(base64, 'image/png');
+
+      // Create a File object from the Blob
+      const file = new File([blob], "signature.png", {type: 'image/png'});
+
+      // Use a DataTransfer object to assign the file to the input field
+      const dataTransfer = new DataTransfer();
+      dataTransfer.items.add(file);
+
+      // Set the files property of the input element to the file created
+      $("#signature-file")[0].files = dataTransfer.files;
+
+      console.log("Signature Saved"); // Log that the signature has been saved
+    });
+
+    /**
+     * Event handler for the "Clear Signature" button click.
+     * Resets the signature pad, clearing any existing signature.
+     */
+    $("#clear-signature").click(() => {
+      $sig.jSignature("reset"); // Clears the signature pad
+
+      console.log("Signature Cleared"); // Log that the signature has been cleared
+    });
+  });
+</script>
+<!-- JS-onSubmit -->
+<script>
+  /**
+   * Initializes the form by adding an event listener for form submission.
+   * This listener triggers the form handling logic, preventing default behavior
+   * and processing the form data.
+   */
+  function initializeForm() {
+    document.getElementById('user-form').addEventListener('submit', handleFormSubmission);
+  }
+
+  /**
+   * Handles the form submission event. It prevents the default form submission behavior
+   * to avoid page reloads and processes the form data. If files are included, they are
+   * uploaded to Google Drive, and the non-file data is sent to Google Sheets.
+   *
+   * @param {Event} event - The form submission event.
+   */
+  async function handleFormSubmission(event) {
+    event.preventDefault(); // Prevents the default form submission behavior
+
+    const modalMessageElement = document.getElementById('modal-message');
+    const modalHeaderElement = document.getElementById('modal-header');
+
+    // Show the modal and disable scrolling
+    modalMessageElement.innerHTML = "<p>Attendere prego...</p>";
+
+    modalHeaderElement.style.display = 'none';
+    $("#MessageModal").modal('toggle');
+
+    const dateInput = document.getElementById('date');
+    dateInput.value = new Date().toISOString().split('T')[0];
+    // Extract the form data
+    const formData = new FormData(event.target);
+
+    // Process the form data, separating files from other data
+    const {nonFileData, files} = processFormData(formData);
+
+    try {
+      // Upload the files and add their identifiers to the non-file data
+      await uploadFiles(files, nonFileData);
+
+      // Submit the non-file data to Google Sheets
+      await submitForm(nonFileData);
+
+      modalHeaderElement.style.display = null;
+      modalMessageElement.innerHTML = "<p>La tua richiesta è stata inviata con successo!</p>" +
+              "<p>Un responsabile ti contatterà presto per procedere con la richiesta di adesione.</p>" +
+              "<p>Verrai rimandato alla homepage a breve.</p>" +
+              "<p>Grazie per la tua partecipazione.</p>";
+      setTimeout(function() {
+        window.parent.parent.close()
+      }, 10000);
+
+    } catch (error) {
+      // Log the error to the console and notify the user of the failure
+      console.error('Form submission error:', error);
+
+      modalHeaderElement.style.display = null;
+      modalMessageElement.innerHTML = "<p>Si è verificato un errore durante l'elaborazione della tua richiesta.</p>" +
+              "<p>Per favore, riprova più tardi.</p>";
+    }
+  }
+
+
+  /**
+   * Processes the form data by separating file-related data from non-file data.
+   * Returns an object containing separate collections for files and non-file data.
+   *
+   * @param {FormData} formData - The data from the submitted form.
+   * @returns {{ nonFileData: Object, files: Array<Object> }}
+   *          An object containing separate collections for non-file data and file data.
+   */
+  function processFormData(formData) {
+    const nonFileData = {}; // Collection for non-file form data (e.g., text inputs)
+    const files = []; // Collection for files (e.g., uploaded files)
+
+    // Iterate over the form data and categorize each item as file or non-file
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        files.push({key, file: value}); // Store the file with its associated key
+      } else {
+        nonFileData[key] = value; // Store the non-file data
+      }
+    });
+
+    return {nonFileData, files}; // Return separate collections for files and non-file data
+  }
+
+  /**
+   * Reads a file and returns its content as a Base64-encoded string. This is useful
+   * for transmitting file content over HTTP.
+   *
+   * @param {File} file - The file to be read.
+   * @returns {Promise<string>} A Promise resolving to the Base64-encoded content of the file.
+   */
+  function readFileAsBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader(); // Instance to read file data
+      reader.onload = (e) => {
+        // Extract the Base64 content from the Data URL
+        resolve(e.target.result.split(',')[1]);
+      };
+      reader.onerror = reject; // Handle read errors
+      reader.readAsDataURL(file); // Start reading the file as a Data URL
+    });
+  }
+
+  /**
+   * Uploads a collection of files to Google Drive using Google Apps Script.
+   * After uploading, it updates the non-file data with the identifiers of the uploaded files.
+   *
+   * @param {Array<Object>} files - Collection of file objects with `key` and `file`.
+   * @param {Object} nonFileData - Collection of non-file form data.
+   * @returns {Promise<void>} A Promise that resolves when all files are uploaded.
+   */
+  async function uploadFiles(files, nonFileData) {
+    const fileUploads = files.map(async (fileEntry) => {
+      // Read the file as a Base64-encoded string
+      const base64Data = await readFileAsBase64(fileEntry.file);
+
+      // Create an object containing the file metadata and data
+      const fileData = {
+        fileName: fileEntry.file.name,
+        mimeType: fileEntry.file.type,
+        data: base64Data,
+      };
+
+      // Upload the file to Google Drive and get the file identifier
+      const fileId = await new Promise((resolve, reject) => {
+        google.script.run
+                .withSuccessHandler(resolve) // If successful, resolve with the file ID
+                .withFailureHandler(reject)  // If failed, reject the Promise
+                .upload(fileData); // Call the server-side upload function
+      });
+
+      // Add the file identifier to the non-file data
+      nonFileData[fileEntry.key + '_fileId'] = fileId;
+    });
+
+    // Wait for all file uploads to complete
+    await Promise.all(fileUploads);
+  }
+
+  /**
+   * Submits the non-file data to a Google Apps Script function that saves it in Google Sheets.
+   *
+   * @param {Object} nonFileData - Collection of non-file form data.
+   * @returns {Promise<void>} A Promise that resolves when the data is submitted.
+   */
+  async function submitForm(nonFileData) {
+    await new Promise((resolve, reject) => {
+      google.script.run
+              .withSuccessHandler(resolve) // If successful, resolve the Promise
+              .withFailureHandler(reject) // If failed, reject the Promise
+              .onSubmit(nonFileData); // Call the server-side function to save the data in Google Sheets
+    });
+  }
+
+  // Initialize the form by setting up the event listener when the script is loaded
+  initializeForm();
+</script>
+
+</html>

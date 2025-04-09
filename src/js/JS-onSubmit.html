@@ -1,0 +1,142 @@
+<script>
+    /**
+     * Initializes the form by adding an event listener for form submission.
+     * This listener triggers the form handling logic, preventing default behavior
+     * and processing the form data.
+     */
+    function initializeForm() {
+        document.getElementById('user-form').addEventListener('submit', handleFormSubmission);
+    }
+
+    /**
+     * Handles the form submission event. It prevents the default form submission behavior
+     * to avoid page reloads and processes the form data. If files are included, they are
+     * uploaded to Google Drive, and the non-file data is sent to Google Sheets.
+     *
+     * @param {Event} event - The form submission event.
+     */
+    async function handleFormSubmission(event) {
+        event.preventDefault(); // Prevents the default form submission behavior
+        const dateInput = document.getElementById('date');
+        const currentDate = new Date().toISOString().split('T')[0];
+        dateInput.value = currentDate;
+        // Extract the form data
+        const formData = new FormData(event.target);
+
+        // Process the form data, separating files from other data
+        const { nonFileData, files } = processFormData(formData);
+
+        try {
+            // Upload the files and add their identifiers to the non-file data
+            await uploadFiles(files, nonFileData);
+
+            // Submit the non-file data to Google Sheets
+            await submitForm(nonFileData);
+
+            // Inform the user that the submission was successful
+            alert('Form submitted successfully!');
+        } catch (error) {
+            // Log the error to the console and notify the user of the failure
+            console.error('Form submission error:', error);
+            alert('Form submission failed. Please try again.');
+        }
+    }
+
+    /**
+     * Processes the form data by separating file-related data from non-file data.
+     * Returns an object containing separate collections for files and non-file data.
+     *
+     * @param {FormData} formData - The data from the submitted form.
+     * @returns {{ nonFileData: Object, files: Array<Object> }}
+     *          An object containing separate collections for non-file data and file data.
+     */
+    function processFormData(formData) {
+        const nonFileData = {}; // Collection for non-file form data (e.g., text inputs)
+        const files = []; // Collection for files (e.g., uploaded files)
+
+        // Iterate over the form data and categorize each item as file or non-file
+        formData.forEach((value, key) => {
+            if (value instanceof File) {
+                files.push({ key, file: value }); // Store the file with its associated key
+            } else {
+                nonFileData[key] = value; // Store the non-file data
+            }
+        });
+
+        return { nonFileData, files }; // Return separate collections for files and non-file data
+    }
+
+    /**
+     * Reads a file and returns its content as a Base64-encoded string. This is useful
+     * for transmitting file content over HTTP.
+     *
+     * @param {File} file - The file to be read.
+     * @returns {Promise<string>} A Promise resolving to the Base64-encoded content of the file.
+     */
+    function readFileAsBase64(file) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader(); // Instance to read file data
+            reader.onload = (e) => {
+                // Extract the Base64 content from the Data URL
+                resolve(e.target.result.split(',')[1]);
+            };
+            reader.onerror = reject; // Handle read errors
+            reader.readAsDataURL(file); // Start reading the file as a Data URL
+        });
+    }
+
+    /**
+     * Uploads a collection of files to Google Drive using Google Apps Script.
+     * After uploading, it updates the non-file data with the identifiers of the uploaded files.
+     *
+     * @param {Array<Object>} files - Collection of file objects with `key` and `file`.
+     * @param {Object} nonFileData - Collection of non-file form data.
+     * @returns {Promise<void>} A Promise that resolves when all files are uploaded.
+     */
+    async function uploadFiles(files, nonFileData) {
+        const fileUploads = files.map(async (fileEntry) => {
+            // Read the file as a Base64-encoded string
+            const base64Data = await readFileAsBase64(fileEntry.file);
+
+            // Create an object containing the file metadata and data
+            const fileData = {
+                fileName: fileEntry.file.name,
+                mimeType: fileEntry.file.type,
+                data: base64Data,
+            };
+
+            // Upload the file to Google Drive and get the file identifier
+            const fileId = await new Promise((resolve, reject) => {
+                google.script.run
+                    .withSuccessHandler(resolve) // If successful, resolve with the file ID
+                    .withFailureHandler(reject)  // If failed, reject the Promise
+                    .upload(fileData); // Call the server-side upload function
+            });
+
+            // Add the file identifier to the non-file data
+            nonFileData[fileEntry.key + '_fileId'] = fileId;
+        });
+
+        // Wait for all file uploads to complete
+        await Promise.all(fileUploads);
+    }
+
+    /**
+     * Submits the non-file data to a Google Apps Script function that saves it in Google Sheets.
+     *
+     * @param {Object} nonFileData - Collection of non-file form data.
+     * @returns {Promise<void>} A Promise that resolves when the data is submitted.
+     */
+    async function submitForm(nonFileData) {
+        await new Promise((resolve, reject) => {
+            google.script.run
+                .withSuccessHandler(resolve) // If successful, resolve the Promise
+                .withFailureHandler(reject) // If failed, reject the Promise
+                .onSubmit(nonFileData); // Call the server-side function to save the data in Google Sheets
+        });
+    }
+
+    // Initialize the form by setting up the event listener when the script is loaded
+    initializeForm();
+
+</script>
