@@ -1,7 +1,7 @@
-<!DOCTYPE html>
-<!-- saved from url=(0156)http://localhost:63342/CER_MEMBERSHIP_FORM/functions/resources/template_Richiesta_Adesione_CER.html?_ijt=d0neh81d4jiru22knrs04l4ub&_ij_reload=RELOAD_ON_SAVE -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
+<html lang="en">
+<head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+
 
     <title>template_Richiesta_Adesione_CER</title>
     <style>
@@ -16,12 +16,24 @@
             margin: 20px auto;
             width: 100%;
             max-width: 800px;
+            min-width: 800px;
             box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
         }
 
         .pdf-page img {
             width: 100%;
             display: block;
+        }
+
+        #pod-code {
+            font-size: x-large;
+            top: 540px;
+            left: 180px;
+            width: 524px;
+            letter-spacing: 27px;
+            padding: 18px 18px 18px 12px;
+            margin-right: -20px;
+            justify-content: flex-start;
         }
 
         .overlay {
@@ -41,35 +53,88 @@
     </style>
 </head>
 <body>
-
-<!-- You can loop this in templating languages or JS if needed -->
 <div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page1.jpg" alt="PDF Page 1">
-    <div style="top: 241px;left: 193px;width: 293px;" class="overlay" id="name">[name]</div>
-    <div style="top: 241px;left: 542px;width: 180px;" class="overlay" id="email">[email]</div>
+    <img alt="PDF Page 1" src="./template_Richiesta_Adesione_CER_files/page001.jpg">
+    <div class="overlay" id="name" style="top: 219px;left: 193px;width: 226px;"></div>
+    <div class="overlay" id="birthplace" style="top: 218px;left: 477px;width: 145px;"></div>
+    <div class="overlay" id="birthdate" style="top: 219px;left: 640px;width: 80px;"></div>
+    <div class="overlay" id="residence-city" style="top: 266px;left: 163px;width: 105px;"></div>
+    <div class="overlay" id="residence-prov" style="top: 266px;left: 309px;width: 25px;"></div>
+    <div class="overlay" id="residence-street" style="top: 266px;left: 380px;width: 288px;"></div>
+    <div class="overlay" id="residence-num" style="top: 266px;left: 688px;width: 35px;"></div>
+    <div class="overlay" id="fiscal-code" style="top: 314px;left: 146px;width: 576px;"></div>
+    <div class="overlay" id="phone-number" style="top: 362px;left: 100px;width: 225px;"></div>
+    <div class="overlay" id="email" style="top: 362px;left: 376px;width: 349px;"></div>
+    <div class="overlay" id="person" style="top: 410px;left: 199px;width: 20px;"></div>
+    <div class="overlay" id="company" style="top: 410px;left: 342px;width: 20px;"></div>
+    <div class="overlay" id="comp-role" style="top: 516px;left: 245px;width: 258px;"></div>
+    <div class="overlay" id="comp-addr" style="top: 563px;left: 77px;width: 645px;"></div>
+    <div class="overlay" id="comp-name" style="top: 610px;left: 152px;width: 291px;"></div>
+    <div class="overlay" id="comp-fiscal-code" style="top: 610px;left: 545px;width: 176px;"></div>
+    <div class="overlay" id="vat" style="top: 658px;left: 152px;width: 186px;"></div>
+    <div class="overlay" id="pec" style="top: 658px;left: 374px;width: 349px;"></div>
+    <div class="overlay" id="comp-email" style="top: 705px;left: 100px;width: 233px;"></div>
+    <div class="overlay" id="comp-phone-number" style="top: 705px;left: 382px;width: 343px;"></div>
 </div>
 <div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page2.jpg" alt="PDF Page 2">
+    <img alt="PDF Page 2" src="./template_Richiesta_Adesione_CER_files/page002.jpg">
+    <div class="overlay" id="consumer-role-check" style="top: 311px;left: 93px;width: 19px;"></div>
+    <div class="overlay" id="producer-role-check" style="top: 340px;left: 93px;width: 19px;"></div>
+    <div class="overlay" id="prosumer-role-check" style="top: 369px;left: 93px;width: 19px;"></div>
+    <div class="overlay" id="other-role-check" style="top: 418px;left: 93px;width: 19px;"></div>
+    <div class="overlay" id="other-role" style="top: 418px;left: 237px;width: 488px;"></div>
+    <div class="overlay" id="pod-code" style="top: 540px; left: 180px;width: 524px;"></div>
+    <div class="overlay" id="committed-power" style="top: 663px;left: 618px;width: 67px;"></div>
+    <div class="overlay" id="e-addr-same-res-yes" style="top: 705px;left: 345px;width: 20px;"></div>
+    <div class="overlay" id="e-addr-same-res-no" style="top: 705px;left: 485px;width: 20px;"></div>
+    <div class="overlay" id="e-addr-city" style="top: 732px;left: 186px;width: 106px;"></div>
+    <div class="overlay" id="e-addr-prov" style="top: 732px;left: 332px;width: 26px;"></div>
+    <div class="overlay" id="e-addr-street" style="top: 732px;left: 401px;width: 266px;"></div>
+    <div class="overlay" id="e-addr-num" style="top: 732px;left: 686px;width: 36px;"></div>
+    <div class="overlay" id="foglio" style="top: 787px;left: 171px;width: 72px;"></div>
+    <div class="overlay" id="particella" style="top: 787px;left: 311px;width: 72px;"></div>
+    <div class="overlay" id="subalterno" style="top: 787px;left: 462px;width: 72px;"></div>
+    <div class="overlay" id="f1-usage" style="top: 847px;left: 274px;width: 66px;"></div>
+    <div class="overlay" id="f2-usage" style="top: 847px;left: 403px;width: 66px;"></div>
+    <div class="overlay" id="f3-usage" style="top: 847px;left: 144px;width: 66px;"></div>
+    <div class="overlay" id="total-usage" style="top: 847px;left: 604px;width: 66px;"></div>
+    <div class="overlay" id="existing-plant-no" style="top: 892px;left: 558px;width: 20px;"></div>
+    <div class="overlay" id="existing-plant-yes" style="top: 892px;left: 638px;width: 20px;"></div>
+    <div class="overlay" id="connection-date-year" style="top: 923px;left: 367px;width: 111px;"></div>
+    <div class="overlay" id="connection-date-month" style="top: 923px;left: 517px;width: 81px;"></div>
+    <div class="overlay" id="peak-power" style="top: 951px;left: 333px;width: 111px;"></div>
+    <div class="overlay" id="active-conventions-no" style="top: 979px;left: 558px;width: 20px;"></div>
+    <div class="overlay" id="active-conventions-yes" style="top: 979px;left: 638px;width: 20px;"></div>
+    <div class="overlay" id="active-conventions-list" style="top: 1007px;left: 282px;width: 330px;"></div>
 </div>
 <div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page3.jpg" alt="PDF Page 3">
-</div>
-<div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page4.jpg" alt="PDF Page 4">
-</div>
+    <img alt="PDF Page 3" src="./template_Richiesta_Adesione_CER_files/page003.jpg">
 
-<div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page5.jpg" alt="PDF Page 5">
-</div>
-
-<div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page6.jpg" alt="PDF Page 6">
+    <div class="overlay" id="want-plant-no" style="top: 369px;left: 74px;width: 18px;"></div>
+    <div class="overlay" id="want-plant-yes" style="top: 402px;left: 75px;width: 18px;"></div>
+    <div class="overlay" id="available-surface" style="top: 402px;left: 404px;width: 109px;"></div>
+    <div class="overlay" id="id-document" style="top: 781px;left: 592px;width: 125px;"></div>
+    <div class="overlay" id="chamber-doc" style="top: 811px;left: 592px;width: 125px;"></div>
+    <div class="overlay" id="electricity-bill" style="top: 956px;left: 592px;width: 125px;"></div>
+    <div class="overlay" id="production-electricity-bill" style="top: 1026px;left: 592px;width: 125px;"></div>
 </div>
 
 <div class="pdf-page">
-    <img src="./template_Richiesta_Adesione_CER_files/page7.jpg" alt="PDF Page 7">
+    <img alt="PDF Page 4" src="./template_Richiesta_Adesione_CER_files/page004.jpg">
+</div>
+
+<div class="pdf-page">
+    <img alt="PDF Page 5" src="./template_Richiesta_Adesione_CER_files/page005.jpg">
+</div>
+
+<div class="pdf-page">
+    <img alt="PDF Page 6" src="./template_Richiesta_Adesione_CER_files/page006.jpg">
+</div>
+
+<div class="pdf-page">
+    <img alt="PDF Page 7" src="./template_Richiesta_Adesione_CER_files/page007.jpg">
 </div>
 
 
-
-</body></html>
+</body>
+</html>
