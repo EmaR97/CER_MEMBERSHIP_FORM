@@ -2,41 +2,6 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleRequiredFields = (radioName, valueToCheck, fieldNames) => {
-                const fields = fieldNames.flatMap(name => Array.from(document.querySelectorAll(`input[name="${name}"]`)));
-                document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
-                    radio.addEventListener("change", () => {
-                        const shouldRequire = radio.value === valueToCheck && radio.checked;
-                        fields.forEach(field => field.toggleAttribute("required", shouldRequire));
-                    });
-                });
-            };
-
-
-            // For the user-type radio buttons (company-related fields)
-            toggleRequiredFields('user-type', 'company', [
-                'comp-role',
-                'comp-addr',
-                'comp-name',
-                'comp-fiscal-code',
-                'vat',
-                'pec',
-                'comp-email',
-                'comp-phone-number',
-                'chamber-doc'
-            ]);
-
-            // For the role-check radio buttons (other-role field)
-            toggleRequiredFields('role-check', 'other', ['other-role']);
-            toggleRequiredFields('e-addr-same-res', 'no', ['e-addr-city', "e-addr-prov", "e-addr-street", "e-addr-num"]);
-            toggleRequiredFields('existing-plant', 'yes', ['connection-date-year', "connection-date-month", "peak-power", "active-conventions", "active-conventions-list", "electricity-bill-prod"]);
-            toggleRequiredFields('active-conventions', 'yes', ["active-conventions-list"]);
-            toggleRequiredFields('want-plant', 'yes', ["available-surface"]);
-        });
-
-    </script>
     <title>template_Richiesta_Adesione_CER</title>
     <style>
         body {
@@ -56,6 +21,7 @@
 
         .pdf-page img {
             width: 100%;
+
             display: block;
         }
 
@@ -77,26 +43,24 @@
         .overlay {
             height: 20px;
             position: absolute;
-            background-color: rgba(200, 200, 200, 0.3); /* Light gray */
-            border: 2px dashed #aaa;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 14px;
-            color: #666;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none;
-            cursor: not-allowed;
-
-        }
-
-        .overlay[required] {
-            background-color: rgba(0, 128, 255, 0.3); /* Semi-transparent blue */
-            border: 2px dashed #007BFF;
+            border: 2px dashed #aaa;
             color: #000;
             pointer-events: auto; /* Enable interaction */
             cursor: text;
+        }
+
+        .overlay[disabled] {
+            color: #666;
+            background-color: rgba(200, 200, 200, 0.3); /* Light gray */
+            border: 2px dashed #aaa;
+            pointer-events: none;
+            cursor: not-allowed;
         }
 
         input[required] {
@@ -114,7 +78,6 @@
             width: 16px;
             height: 16px;
             background-color: #fff;
-            border: 2px solid #007BFF;
             border-radius: 2px; /* Make it square */
             cursor: pointer;
         }
@@ -125,12 +88,213 @@
             position: absolute;
             width: 10px;
             height: 10px;
-            background-color: #007BFF;
+            background-color: black;
         }
+
+        .form-buttons button {
+            width: 100px;
+            margin: 0 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #submit-form {
+            background-color: green;
+        }
+
+        #clear-form {
+            background-color: darkred;
+        }
+
+        #submit-form:hover {
+            background-color: #45a049;
+        }
+
+        #clear-form:hover {
+            background-color: red;
+        }
+
+        .form-buttons button:focus {
+            outline: none;
+        }
+
+        .signature canvas {
+            background-color: rgba(170, 170, 170, 0.15);
+            border: 2px dashed #007BFF;
+            border-radius: 4px;
+        }
+
+        .
     </style>
+    <script>
+        const toggleDisabledFieldsOnChange = (radioName, valueToCheck, fieldNames, onChange = false) => {
+            const fields = fieldNames.flatMap(name => Array.from(document.querySelectorAll(`input[name="${name}"]`)));
+            const handleChange = (radio) => {
+                const shouldDisable = radio.value === valueToCheck && radio.checked;
+                fields.forEach(field => field.toggleAttribute("disabled", !shouldDisable));
+            };
+            document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+                if (onChange) radio.addEventListener("change", () => handleChange(radio));
+                else handleChange(radio);
+            });
+        };
+
+        const toggleDisabledFieldsOnChangeAll = (onChange = false) => {
+            const conditions = [
+                {
+                    name: 'user-type',
+                    value: 'company',
+                    fields: ['comp-role', 'comp-addr', 'comp-name', 'comp-fiscal-code', 'vat', 'pec', 'comp-email', 'comp-phone-number', 'chamber-doc']
+                },
+                {name: 'role-check', value: 'other', fields: ['other-role']},
+                {
+                    name: 'e-addr-same-res',
+                    value: 'no',
+                    fields: ['e-addr-city', "e-addr-prov", "e-addr-street", "e-addr-num"]
+                },
+                {
+                    name: 'existing-plant',
+                    value: 'yes',
+                    fields: ['connection-date-year', "connection-date-month", "peak-power", "active-conventions", "active-conventions-list", "electricity-bill-prod"]
+                },
+                {name: 'active-conventions', value: 'yes', fields: ["active-conventions-list"]},
+                {name: 'want-plant', value: 'yes', fields: ["available-surface"]}
+            ];
+
+            conditions.forEach(({name, value, fields}) => toggleDisabledFieldsOnChange(name, value, fields, onChange));
+        };
+
+        document.addEventListener("DOMContentLoaded", () => toggleDisabledFieldsOnChangeAll(true));
+
+
+    </script>
+    <script>
+        const storeInputData = (key, value) => {
+            if (value !== '')
+                sessionStorage.setItem(key, value)
+        };
+
+        const emptyInputData = (key) => sessionStorage.removeItem(key);
+
+        const loadIinputData = (key) => sessionStorage.getItem(key);
+
+        function saveFormToSession(form) {
+            form?.querySelectorAll("input").forEach(input => {
+                const {id, type, checked, name, value} = input;
+                if (type === "file") {
+                    return; // Ignore file inputs
+                }
+
+                if (type === "checkbox") {
+                    checked ? storeInputData(id, "true") : emptyInputData(id);
+                } else if (type === "radio" && checked) {
+                    form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+                        emptyInputData(radio.name);
+                    });
+                    storeInputData(name, value);
+                } else if (type !== "checkbox" && type !== "radio") {
+                    storeInputData(name, value);
+                }
+            });
+        }
+
+        function loadFormFromSession(form) {
+            form?.querySelectorAll("input").forEach(input => {
+                if (input.type === "file") {
+                    return; // Ignore file inputs
+                }
+                const value = loadIinputData(input.name);
+                if (input.type === "checkbox") {
+                    input.checked = value === "true";
+                } else if (input.type === "radio") {
+                    input.checked = loadIinputData(input.name) === input.value;
+                } else if (value) {
+                    input.value = value;
+                }
+            });
+            toggleDisabledFieldsOnChangeAll()
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("membership-form");
+
+            // Load session data when the DOM is ready
+            loadFormFromSession(form);
+
+            // Save session data when the form changes
+            form?.addEventListener("change", () => {
+                saveFormToSession(form);
+                loadFormFromSession(form);
+            });
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById('clear-form').addEventListener('click', function () {
+                document.getElementById('membership-form').reset();
+                sessionStorage.clear()
+            });
+
+            document.getElementById('submit-form').addEventListener('click', function (event) {
+            });
+        })
+    </script>
+    <!-- JavaScript to handle signature pad, clearing, and uploading -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.rawgit.com/willowsystems/jSignature/master/libs/jSignature.min.js"></script>
+    <script>
+        function initSignaturePad(signatureContainer) {
+            const image = $(signatureContainer).find("img");
+            const containerSelector = $(signatureContainer).find("div");
+            const fileInputSelector = $(signatureContainer).find("input");
+            const clearButtonSelector = $(signatureContainer).find("button");
+
+            const $sig = containerSelector.jSignature({
+                'decor-color': 'transparent',
+                'width': "235px",
+                'height': "100px",
+                'lineWidth': 1,  // Adjust this value to make the cursor smaller
+
+            });
+
+            clearButtonSelector.click(() => {
+                $sig.jSignature("reset");
+                containerSelector.show();
+                image.hide();
+                fileInputSelector.val(''); // Clears the file input
+                console.log(`clearButtonSelector cleared`);
+            });
+
+
+            fileInputSelector.on('change', function (e) {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = function (event) {
+                    const dataURL = event.target.result;
+                    console.log('File loaded, setting image source...');
+                    containerSelector.hide();
+                    image.attr("src", dataURL).show();
+                    console.log(`containerSelector image loaded`);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+
+        $(function () {
+            initSignaturePad("#signature-parent-1");
+            initSignaturePad("#signature-parent-2");
+        });
+
+    </script>
 </head>
 <body>
-<form>
+<form id="membership-form" style="margin-bottom: 80px">
     <div class="pdf-page">
         <img alt="PDF Page 1" src="./template_Richiesta_Adesione_CER_files/page001.jpg">
         <input class="overlay" name="name" required style="top: 219px;left: 193px;width: 523px;">
@@ -182,13 +346,13 @@
         <input class="overlay" name="e-addr-prov" required style="top: 732px;left: 332px;width: 26px;">
         <input class="overlay" name="e-addr-street" required style="top: 732px;left: 401px;width: 266px;">
         <input class="overlay" name="e-addr-num" required style="top: 732px;left: 686px;width: 36px;" type="number">
-        <input class="overlay" name="foglio" required style="top: 787px;left: 171px;width: 72px;">
-        <input class="overlay" name="particella" required style="top: 787px;left: 311px;width: 72px;">
-        <input class="overlay" name="subalterno" required style="top: 787px;left: 462px;width: 72px;">
-        <input class="overlay" name="f1-usage" required style="top: 847px;left: 274px;width: 66px;" type="number">
-        <input class="overlay" name="f2-usage" required style="top: 847px;left: 403px;width: 66px;" type="number">
-        <input class="overlay" name="f3-usage" required style="top: 847px;left: 144px;width: 66px;" type="number">
-        <input class="overlay" name="total-usage" required style="top: 847px;left: 604px;width: 66px;" type="number">
+        <input class="overlay" name="foglio" style="top: 787px;left: 171px;width: 72px;">
+        <input class="overlay" name="particella" style="top: 787px;left: 311px;width: 72px;">
+        <input class="overlay" name="subalterno" style="top: 787px;left: 462px;width: 72px;">
+        <input class="overlay" name="f1-usage" style="top: 847px;left: 274px;width: 66px;" type="number">
+        <input class="overlay" name="f2-usage" style="top: 847px;left: 403px;width: 66px;" type="number">
+        <input class="overlay" name="f3-usage" style="top: 847px;left: 144px;width: 66px;" type="number">
+        <input class="overlay" name="total-usage" style="top: 847px;left: 604px;width: 66px;" type="number">
         <input class="overlay square-radio" name="existing-plant" required style="top: 892px;left: 556px;" type="radio"
                value="no">
         <input class="overlay square-radio" name="existing-plant" required style="top: 892px;left: 636px;" type="radio"
@@ -223,7 +387,14 @@
                type="file">
         <input class="overlay" name="place" required style="top: 969px;left: 122px;width: 137px;">
         <input class="overlay" name="date" required style="top: 969px;left: 297px;width: 140px;" type="date">
-        <input class="overlay" name="signature" required style="top: 969px;left: 489px;width: 234px;">
+        <div id="signature-parent-1" style="position: absolute;top: 900px;left: 489px;">
+            <div class="signature"></div>
+            <img>
+            <button style="margin-top: 10px" type="button">Cancella Firma</button>
+            <input class="form-control" name="signature-file" required
+                   style="margin:0 0 0 38px;width: 90px"
+                   type="file">
+        </div>
     </div>
     <div class="pdf-page">
         <img alt="PDF Page 4" src="./template_Richiesta_Adesione_CER_files/page004.jpg">
@@ -252,7 +423,19 @@
                value="no">
         <input class="overlay" name="place" required style="top: 850px;left: 122px;width: 137px;">
         <input class="overlay" name="date" required style="top: 850px;left: 297px;width: 140px;" type="date">
-        <input class="overlay" name="signature" required style="top: 850px;left: 489px;width: 234px;">
+        <div id="signature-parent-2" style="position: absolute;top: 780px;left: 489px;">
+            <div class="signature"></div>
+            <img>
+            <button style="margin-top: 10px" type="button">Cancella Firma</button>
+            <input class="form-control" name="signature-file" required
+                   style="margin:0 0 0 38px;width: 90px"
+                   type="file">
+        </div>
+    </div>
+
+    <div class="form-buttons" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);">
+        <button id="clear-form" type="button">Svuota</button>
+        <button id="submit-form" type="submit">Invia</button>
     </div>
 </form>
 
