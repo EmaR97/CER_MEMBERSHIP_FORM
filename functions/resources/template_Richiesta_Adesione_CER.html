@@ -2,7 +2,41 @@
 <head>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleRequiredFields = (radioName, valueToCheck, fieldNames) => {
+                const fields = fieldNames.flatMap(name => Array.from(document.querySelectorAll(`input[name="${name}"]`)));
+                document.querySelectorAll(`input[name="${radioName}"]`).forEach(radio => {
+                    radio.addEventListener("change", () => {
+                        const shouldRequire = radio.value === valueToCheck && radio.checked;
+                        fields.forEach(field => field.toggleAttribute("required", shouldRequire));
+                    });
+                });
+            };
 
+
+            // For the user-type radio buttons (company-related fields)
+            toggleRequiredFields('user-type', 'company', [
+                'comp-role',
+                'comp-addr',
+                'comp-name',
+                'comp-fiscal-code',
+                'vat',
+                'pec',
+                'comp-email',
+                'comp-phone-number',
+                'chamber-doc'
+            ]);
+
+            // For the role-check radio buttons (other-role field)
+            toggleRequiredFields('role-check', 'other', ['other-role']);
+            toggleRequiredFields('e-addr-same-res', 'no', ['e-addr-city', "e-addr-prov", "e-addr-street", "e-addr-num"]);
+            toggleRequiredFields('existing-plant', 'yes', ['connection-date-year', "connection-date-month", "peak-power", "active-conventions", "active-conventions-list", "electricity-bill-prod"]);
+            toggleRequiredFields('active-conventions', 'yes', ["active-conventions-list"]);
+            toggleRequiredFields('want-plant', 'yes', ["available-surface"]);
+        });
+
+    </script>
     <title>template_Richiesta_Adesione_CER</title>
     <style>
         body {
@@ -26,126 +60,202 @@
         }
 
         #pod-code {
+            position: absolute;
             font-size: x-large;
-            top: 540px;
-            left: 180px;
-            width: 524px;
             letter-spacing: 27px;
-            padding: 18px 18px 18px 12px;
-            margin-right: -20px;
             justify-content: flex-start;
+            width: 550px;
+            height: 38px;
+            background-color: rgba(0, 0, 0, 0);
+            padding-left: 12px;
+            left: 0;
+            border: none;
+            outline: none;
+            box-sizing: border-box;
         }
 
         .overlay {
             height: 20px;
             position: absolute;
-            background-color: rgba(0, 128, 255, 0.3); /* Semi-transparent blue */
-            border: 2px dashed #007BFF;
+            background-color: rgba(200, 200, 200, 0.3); /* Light gray */
+            border: 2px dashed #aaa;
             border-radius: 4px;
             box-sizing: border-box;
             font-size: 14px;
-            color: #000;
+            color: #666;
             display: flex;
             align-items: center;
             justify-content: center;
-            pointer-events: none; /* Let mouse clicks pass through */
+            pointer-events: none;
+            cursor: not-allowed;
+
+        }
+
+        .overlay[required] {
+            background-color: rgba(0, 128, 255, 0.3); /* Semi-transparent blue */
+            border: 2px dashed #007BFF;
+            color: #000;
+            pointer-events: auto; /* Enable interaction */
+            cursor: text;
+        }
+
+        input[required] {
+            pointer-events: auto;
+        }
+
+        input {
+            pointer-events: none;
+        }
+
+        input[type="radio"].square-radio {
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            border: 2px solid #007BFF;
+            border-radius: 2px; /* Make it square */
+            cursor: pointer;
+        }
+
+        /* Add square check when selected */
+        input[type="radio"].square-radio:checked::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #007BFF;
         }
     </style>
 </head>
 <body>
-<div class="pdf-page">
-    <img alt="PDF Page 1" src="./template_Richiesta_Adesione_CER_files/page001.jpg">
-    <div class="overlay" id="name" style="top: 219px;left: 193px;width: 226px;"></div>
-    <div class="overlay" id="birthplace" style="top: 218px;left: 477px;width: 145px;"></div>
-    <div class="overlay" id="birthdate" style="top: 219px;left: 640px;width: 80px;"></div>
-    <div class="overlay" id="residence-city" style="top: 266px;left: 163px;width: 105px;"></div>
-    <div class="overlay" id="residence-prov" style="top: 266px;left: 309px;width: 25px;"></div>
-    <div class="overlay" id="residence-street" style="top: 266px;left: 380px;width: 288px;"></div>
-    <div class="overlay" id="residence-num" style="top: 266px;left: 688px;width: 35px;"></div>
-    <div class="overlay" id="fiscal-code" style="top: 314px;left: 146px;width: 576px;"></div>
-    <div class="overlay" id="phone-number" style="top: 362px;left: 100px;width: 225px;"></div>
-    <div class="overlay" id="email" style="top: 362px;left: 376px;width: 349px;"></div>
-    <div class="overlay" id="person" style="top: 410px;left: 199px;width: 20px;"></div>
-    <div class="overlay" id="company" style="top: 410px;left: 342px;width: 20px;"></div>
-    <div class="overlay" id="comp-role" style="top: 516px;left: 245px;width: 258px;"></div>
-    <div class="overlay" id="comp-addr" style="top: 563px;left: 77px;width: 645px;"></div>
-    <div class="overlay" id="comp-name" style="top: 610px;left: 152px;width: 291px;"></div>
-    <div class="overlay" id="comp-fiscal-code" style="top: 610px;left: 545px;width: 176px;"></div>
-    <div class="overlay" id="vat" style="top: 658px;left: 152px;width: 186px;"></div>
-    <div class="overlay" id="pec" style="top: 658px;left: 374px;width: 349px;"></div>
-    <div class="overlay" id="comp-email" style="top: 705px;left: 100px;width: 233px;"></div>
-    <div class="overlay" id="comp-phone-number" style="top: 705px;left: 382px;width: 343px;"></div>
-</div>
-<div class="pdf-page">
-    <img alt="PDF Page 2" src="./template_Richiesta_Adesione_CER_files/page002.jpg">
-    <div class="overlay" id="consumer-role-check" style="top: 311px;left: 93px;width: 19px;"></div>
-    <div class="overlay" id="producer-role-check" style="top: 340px;left: 93px;width: 19px;"></div>
-    <div class="overlay" id="prosumer-role-check" style="top: 369px;left: 93px;width: 19px;"></div>
-    <div class="overlay" id="other-role-check" style="top: 418px;left: 93px;width: 19px;"></div>
-    <div class="overlay" id="other-role" style="top: 418px;left: 237px;width: 488px;"></div>
-    <div class="overlay" id="pod-code" style="top: 540px; left: 180px;width: 524px;"></div>
-    <div class="overlay" id="committed-power" style="top: 663px;left: 618px;width: 67px;"></div>
-    <div class="overlay" id="e-addr-same-res-yes" style="top: 705px;left: 345px;width: 20px;"></div>
-    <div class="overlay" id="e-addr-same-res-no" style="top: 705px;left: 485px;width: 20px;"></div>
-    <div class="overlay" id="e-addr-city" style="top: 732px;left: 186px;width: 106px;"></div>
-    <div class="overlay" id="e-addr-prov" style="top: 732px;left: 332px;width: 26px;"></div>
-    <div class="overlay" id="e-addr-street" style="top: 732px;left: 401px;width: 266px;"></div>
-    <div class="overlay" id="e-addr-num" style="top: 732px;left: 686px;width: 36px;"></div>
-    <div class="overlay" id="foglio" style="top: 787px;left: 171px;width: 72px;"></div>
-    <div class="overlay" id="particella" style="top: 787px;left: 311px;width: 72px;"></div>
-    <div class="overlay" id="subalterno" style="top: 787px;left: 462px;width: 72px;"></div>
-    <div class="overlay" id="f1-usage" style="top: 847px;left: 274px;width: 66px;"></div>
-    <div class="overlay" id="f2-usage" style="top: 847px;left: 403px;width: 66px;"></div>
-    <div class="overlay" id="f3-usage" style="top: 847px;left: 144px;width: 66px;"></div>
-    <div class="overlay" id="total-usage" style="top: 847px;left: 604px;width: 66px;"></div>
-    <div class="overlay" id="existing-plant-no" style="top: 892px;left: 558px;width: 20px;"></div>
-    <div class="overlay" id="existing-plant-yes" style="top: 892px;left: 638px;width: 20px;"></div>
-    <div class="overlay" id="connection-date-year" style="top: 923px;left: 367px;width: 111px;"></div>
-    <div class="overlay" id="connection-date-month" style="top: 923px;left: 517px;width: 81px;"></div>
-    <div class="overlay" id="peak-power" style="top: 951px;left: 333px;width: 111px;"></div>
-    <div class="overlay" id="active-conventions-no" style="top: 979px;left: 558px;width: 20px;"></div>
-    <div class="overlay" id="active-conventions-yes" style="top: 979px;left: 638px;width: 20px;"></div>
-    <div class="overlay" id="active-conventions-list" style="top: 1007px;left: 282px;width: 330px;"></div>
-</div>
-<div class="pdf-page">
-    <img alt="PDF Page 3" src="./template_Richiesta_Adesione_CER_files/page003.jpg">
-    <div class="overlay" id="want-plant-no" style="top: 117px;left: 558px;width: 18px;"></div>
-    <div class="overlay" id="want-plant-yes" style="top: 117px;left: 639px;width: 18px;"></div>
-    <div class="overlay" id="available-surface" style="top: 160px;left: 399px;width: 109px;"></div>
-    <div class="overlay" id="id-document" style="top: 523px;left: 592px;width: 125px;"></div>
-    <div class="overlay" id="chamber-doc" style="top: 550px;left: 592px;width: 125px;"></div>
-    <div class="overlay" id="electricity-bill" style="top: 690px;left: 592px;width: 125px;"></div>
-    <div class="overlay" id="electricity-bill-prod" style="top: 760px;left: 592px;width: 125px;"></div>
-    <div class="overlay" id="place" style="top: 969px;left: 122px;width: 137px;"></div>
-    <div class="overlay" id="date" style="top: 969px;left: 297px;width: 81px;"></div>
-    <div class="overlay" id="signature" style="top: 969px;left: 489px;width: 234px;"></div>
-</div>
+<form>
+    <div class="pdf-page">
+        <img alt="PDF Page 1" src="./template_Richiesta_Adesione_CER_files/page001.jpg">
+        <input class="overlay" name="name" required style="top: 219px;left: 193px;width: 523px;">
+        <input class="overlay" name="birthplace-city" required style="top: 266px;left: 130px;width: 290px;">
+        <input class="overlay" name="birthplace-prov" required style="top: 266px;left: 460px;width: 42px;">
+        <input class="overlay" name="birthdate" required style="top: 266px;left: 520px;width: 200px;" type="date">
+        <input class="overlay" name="residence-city" required style="top: 314px;left: 163px;width: 105px;">
+        <input class="overlay" name="residence-prov" required style="top: 314px;left: 309px;width: 45px;">
+        <input class="overlay" name="residence-street" required style="top: 314px;left: 395px;width: 258px;">
+        <input class="overlay" name="residence-num" required style="top: 314px;left: 672px;width: 50px;" type="number">
+        <input class="overlay" name="fiscal-code" required style="top: 362px;left: 146px;width: 576px;">
+        <input class="overlay" name="phone-number" required style="top: 410px;left: 100px;width: 225px;" type="tel">
+        <input class="overlay" name="email" required style="top: 410px;left: 376px;width: 349px;" type="email">
+        <input class="overlay square-radio" name="user-type" required style="top: 458px;left: 197px;" type="radio"
+               value="person">
+        <input class="overlay square-radio" name="user-type" required style="top: 458px;left: 340px;" type="radio"
+               value="company">
+        <input class="overlay" name="comp-role" required style="top: 564px;left: 245px;width: 258px;">
+        <input class="overlay" name="comp-addr" required style="top: 611px;left: 77px;width: 645px;">
+        <input class="overlay" name="comp-name" required style="top: 658px;left: 152px;width: 291px;">
+        <input class="overlay" name="comp-fiscal-code" required style="top: 658px;left: 545px;width: 176px;">
+        <input class="overlay" name="vat" required style="top: 706px;left: 152px;width: 186px;">
+        <input class="overlay" name="pec" required style="top: 706px;left: 374px;width: 349px;" type="email">
+        <input class="overlay" name="comp-email" required style="top: 753px;left: 100px;width: 233px;" type="email">
+        <input class="overlay" name="comp-phone-number" required style="top: 753px;left: 382px;width: 343px;"
+               type="tel">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 2" src="./template_Richiesta_Adesione_CER_files/page002.jpg">
+        <input class="overlay square-radio" name="role-check" required style="top: 311px;left: 91px;" type="radio"
+               value="consumer">
+        <input class="overlay square-radio" name="role-check" required style="top: 340px;left: 91px;" type="radio"
+               value="producer">
+        <input class="overlay square-radio" name="role-check" required style="top: 369px;left: 91px;" type="radio"
+               value="prosumer">
+        <input class="overlay square-radio" name="role-check" required style="top: 418px;left: 91px;" type="radio"
+               value="other">
+        <input class="overlay" name="other-role" required style="top: 418px;left: 237px;width: 488px;">
+        <div class="overlay" required style="top: 540px; left: 180px;width: 524px;padding: 18px 0 18px 0;">
+            <input id="pod-code" name="pod-code" required>
+        </div>
+        <input class="overlay" name="type" required style="top: 663px;left: 100px;width: 346px;">
+        <input class="overlay" name="committed-power" required style="top: 663px;left: 618px;width: 67px;">
+        <input class="overlay square-radio" name="e-addr-same-res" required
+               style="top: 704px;left: 342px;" type="radio" value="yes">
+        <input class="overlay square-radio" name="e-addr-same-res" required
+               style="top: 704px;left: 483px;" type="radio" value="no">
+        <input class="overlay" name="e-addr-city" required style="top: 732px;left: 186px;width: 106px;">
+        <input class="overlay" name="e-addr-prov" required style="top: 732px;left: 332px;width: 26px;">
+        <input class="overlay" name="e-addr-street" required style="top: 732px;left: 401px;width: 266px;">
+        <input class="overlay" name="e-addr-num" required style="top: 732px;left: 686px;width: 36px;" type="number">
+        <input class="overlay" name="foglio" required style="top: 787px;left: 171px;width: 72px;">
+        <input class="overlay" name="particella" required style="top: 787px;left: 311px;width: 72px;">
+        <input class="overlay" name="subalterno" required style="top: 787px;left: 462px;width: 72px;">
+        <input class="overlay" name="f1-usage" required style="top: 847px;left: 274px;width: 66px;" type="number">
+        <input class="overlay" name="f2-usage" required style="top: 847px;left: 403px;width: 66px;" type="number">
+        <input class="overlay" name="f3-usage" required style="top: 847px;left: 144px;width: 66px;" type="number">
+        <input class="overlay" name="total-usage" required style="top: 847px;left: 604px;width: 66px;" type="number">
+        <input class="overlay square-radio" name="existing-plant" required style="top: 892px;left: 556px;" type="radio"
+               value="no">
+        <input class="overlay square-radio" name="existing-plant" required style="top: 892px;left: 636px;" type="radio"
+               value="yes">
+        <input class="overlay" name="connection-date-year" required style="top: 923px;left: 367px;width: 111px;"
+               type="number">
+        <input class="overlay" name="connection-date-month" required style="top: 923px;left: 517px;width: 81px;"
+               type="number">
+        <input class="overlay" name="peak-power" required style="top: 951px;left: 333px;width: 111px;" type="number">
+        <input class="overlay square-radio" name="active-conventions" required style="top: 979px;left: 556px;"
+               type="radio"
+               value="no">
+        <input class="overlay square-radio" name="active-conventions" required style="top: 979px;left: 636px;"
+               type="radio"
+               value="yes">
+        <input class="overlay" name="active-conventions-list" required style="top: 1007px;left: 282px;width: 330px;">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 3" src="./template_Richiesta_Adesione_CER_files/page003.jpg">
+        <input class="overlay square-radio" name="want-plant" required style="top: 117px;left: 556px;" type="radio"
+               value="no">
+        <input class="overlay square-radio" name="want-plant" required style="top: 117px;left: 636px;" type="radio"
+               value="yes">
+        <input class="overlay" name="available-surface" required style="top: 160px;left: 399px;width: 109px;"
+               type="number">
+        <input name="name-document" required style="position: absolute;top: 523px;left: 592px;width: 125px;"
+               type="file">
+        <input name="chamber-doc" required style="position: absolute;top: 550px;left: 592px;width: 125px;" type="file">
+        <input name="electricity-bill" required style="position: absolute;top: 690px;left: 592px;width: 125px;"
+               type="file">
+        <input name="electricity-bill-prod" required style="position: absolute;top: 760px;left: 592px;width: 125px;"
+               type="file">
+        <input class="overlay" name="place" required style="top: 969px;left: 122px;width: 137px;">
+        <input class="overlay" name="date" required style="top: 969px;left: 297px;width: 140px;" type="date">
+        <input class="overlay" name="signature" required style="top: 969px;left: 489px;width: 234px;">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 4" src="./template_Richiesta_Adesione_CER_files/page004.jpg">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 5" src="./template_Richiesta_Adesione_CER_files/page005.jpg">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 6" src="./template_Richiesta_Adesione_CER_files/page006.jpg">
+    </div>
+    <div class="pdf-page">
+        <img alt="PDF Page 7" src="./template_Richiesta_Adesione_CER_files/page007.jpg">
+        <input class="overlay" name="name" required style="top: 137px;left: 287px;width: 266px;">
+        <input class="overlay" name="name" required style="top: 197px;left: 167px;width: 326px;">
+        <input class="overlay square-radio" name="consent-1" required style="top: 266px;left: 96px;" type="radio"
+               value="yes">
+        <input class="overlay square-radio" name="consent-1" required style="top: 266px;left: 266px;" type="radio"
+               value="no">
+        <input class="overlay square-radio" name="consent-2" required style="top: 384px;left: 96px;" type="radio"
+               value="yes">
+        <input class="overlay square-radio" name="consent-2" required style="top: 384px;left: 266px;" type="radio"
+               value="no">
+        <input class="overlay square-radio" name="consent-3" required style="top: 508px;left: 96px;" type="radio"
+               value="yes">
+        <input class="overlay square-radio" name="consent-3" required style="top: 508px;left: 266px;" type="radio"
+               value="no">
+        <input class="overlay" name="place" required style="top: 850px;left: 122px;width: 137px;">
+        <input class="overlay" name="date" required style="top: 850px;left: 297px;width: 140px;" type="date">
+        <input class="overlay" name="signature" required style="top: 850px;left: 489px;width: 234px;">
+    </div>
+</form>
 
-<div class="pdf-page">
-    <img alt="PDF Page 4" src="./template_Richiesta_Adesione_CER_files/page004.jpg">
-</div>
-
-<div class="pdf-page">
-    <img alt="PDF Page 5" src="./template_Richiesta_Adesione_CER_files/page005.jpg">
-</div>
-
-<div class="pdf-page">
-    <img alt="PDF Page 6" src="./template_Richiesta_Adesione_CER_files/page006.jpg">
-</div>
-<div class="pdf-page">
-    <img alt="PDF Page 7" src="./template_Richiesta_Adesione_CER_files/page007.jpg">
-    <div class="overlay" id="name-1" style="top: 137px;left: 287px;width: 266px;"></div>
-    <div class="overlay" id="name-2" style="top: 197px;left: 167px;width: 326px;"></div>
-    <div class="overlay" id="consent-1-yes" style="top: 266px;left: 99px;width: 18px;"></div>
-    <div class="overlay" id="consent-1-no" style="top: 266px;left: 269px;width: 18px;"></div>
-    <div class="overlay" id="consent-2-yes" style="top: 384px;left: 99px;width: 18px;"></div>
-    <div class="overlay" id="consent-2-no" style="top: 384px;left: 269px;width: 18px;"></div>
-    <div class="overlay" id="consent-3-yes" style="top: 508px;left: 99px;width: 18px;"></div>
-    <div class="overlay" id="consent-3-no" style="top: 508px;left: 269px;width: 18px;"></div>
-    <div class="overlay" id="place-1" style="top: 850px;left: 122px;width: 137px;"></div>
-    <div class="overlay" id="date-1" style="top: 850px;left: 297px;width: 81px;"></div>
-    <div class="overlay" id="signature-1" style="top: 850px;left: 489px;width: 234px;"></div>
-</div>
 
 </body>
 </html>
