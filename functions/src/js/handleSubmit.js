@@ -47,27 +47,23 @@ async function sendRequest(formObject) {
     }
 }
 
-async function createAndSendPost() {
+async function extracted() {
     const formData = new FormData(document.getElementById('membership-form'));
     const formObject = {};
+    const filePromises = Array.from(formData.entries()).map(([key, value]) => value instanceof File ? new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            formObject[key] = reader.result;
+            resolve();
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(value);
+    }) : formObject[key] = value);
 
-    try {
-        const filePromises = Array.from(formData.entries()).map(([key, value]) => value instanceof File ? new Promise((resolve, reject) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                formObject[key] = reader.result;
-                resolve();
-            };
-            reader.onerror = reject;
-            reader.readAsDataURL(value);
-        }) : formObject[key] = value);
-
-        await Promise.all(filePromises);
-        await sendRequest(formObject); // Send the request after files are processed
-    } catch (error) {
-        console.error('Form submission error:', error);
-    }
+    await Promise.all(filePromises);
+    return formObject;
 }
+
 
 async function handleSubmit() {
     try {
@@ -76,30 +72,31 @@ async function handleSubmit() {
         return
     }
     await generatePDF();
-    await createAndSendPost();
+    try {
+        const formObject = await extracted();
+        await sendRequest(formObject); // Send the request after files are processed
+    } catch (error) {
+        console.error('Form submission error:', error);
+    }
 }
-
 
 const opt = {html2canvas: {scale: 2}};
 
 function generatePDF() {
     return new Promise((resolve, reject) => {
-        const button = $('button');
-        const pdfPage = $('.pdf-page');
+        const [button, input_files, pdfPage] = [$('button'), $('input[type="file"]'), $('.pdf-page')];
         button.hide();
+        input_files.hide();
         pdfPage.css({margin: '0 auto', 'box-shadow': 'none'});
 
         html2pdf().set(opt).from(document.body).outputPdf('blob').then(blob => {
-            const file = new File([blob], 'page.pdf', {type: 'application/pdf'});
             const dt = new DataTransfer();
-            dt.items.add(file);
+            dt.items.add(new File([blob], 'page.pdf', {type: 'application/pdf'}));
             document.getElementById('pdf-upload').files = dt.files;
-
-                button.show();
-                pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
-
-                resolve();
-            })
-            .catch(reject);
+            input_files.show();
+            button.show();
+            pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
+            resolve();
+        }).catch(reject);
     });
 }
