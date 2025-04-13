@@ -1,0 +1,138 @@
+@media print {
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        box-shadow: none;
+    }
+
+    .pdf-page {
+        margin: 0
+    }
+
+    header, footer, input[type="file"], button {
+        display: none;
+    }
+}
+
+body {
+    background-color: #f5f5dc;
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.pdf-page {
+    position: relative;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 800px;
+    min-width: 800px;
+    height: 1120px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.pdf-page img {
+    width: 100%;
+}
+
+#pod-code {
+    position: absolute;
+    font-size: x-large;
+    letter-spacing: 27px;
+    justify-content: flex-start;
+    width: 550px;
+    height: 38px;
+    background-color: rgba(0, 0, 0, 0);
+    padding-left: 12px;
+    left: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+}
+
+.overlay {
+    height: 20px;
+    position: absolute;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #aaa;
+    color: #000;
+    pointer-events: auto; /* Enable interaction */
+    cursor: text;
+}
+
+.overlay[disabled] {
+    color: #666;
+    background-color: rgba(200, 200, 200, 0.3); /* Light gray */
+    border: 2px dashed #aaa;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+input[required] {
+    pointer-events: auto;
+}
+
+input[disabled] {
+    pointer-events: none;
+}
+
+input[type="radio"].square-radio {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    border-radius: 2px; /* Make it square */
+    cursor: pointer;
+}
+
+/* Add square check when selected */
+input[type="radio"].square-radio:checked::before {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: black;
+}
+
+.form-buttons button {
+    width: 100px;
+    margin: 0 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+#submit-form {
+    background-color: green;
+}
+
+#clear-form {
+    background-color: darkred;
+}
+
+#submit-form:hover {
+    background-color: #45a049;
+}
+
+#clear-form:hover {
+    background-color: red;
+}
+
+.form-buttons button:focus {
+    outline: none;
+}
+
+.signature canvas {
+    background-color: rgba(170, 170, 170, 0.15);
+    border: 2px dashed #007BFF;
+    border-radius: 4px;
+}
