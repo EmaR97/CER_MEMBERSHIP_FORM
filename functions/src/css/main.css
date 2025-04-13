@@ -58,18 +58,20 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed #aaa;
+    border: 2px dashed rgba(170, 170, 170, 0.4);
     color: #000;
     pointer-events: auto; /* Enable interaction */
     cursor: text;
 }
 
 .overlay[disabled] {
-    color: #666;
     background-color: rgba(200, 200, 200, 0.3); /* Light gray */
-    border: 2px dashed #aaa;
     pointer-events: none;
     cursor: not-allowed;
+}
+
+.overlay[disabled][type="radio"] {
+    background-color: rgba(235, 235, 235, 1) !important;; /* Light gray */
 }
 
 input[required] {

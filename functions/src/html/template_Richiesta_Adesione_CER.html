@@ -24,7 +24,7 @@
         <input class="overlay" name="residence-city" required style="top: 314px;left: 163px;width: 105px;">
         <input class="overlay" name="residence-prov" required style="top: 314px;left: 309px;width: 45px;">
         <input class="overlay" name="residence-street" required style="top: 314px;left: 395px;width: 258px;">
-        <input class="overlay" name="residence-num" required style="top: 314px;left: 672px;width: 50px;" type="number">
+        <input class="overlay" name="residence-num"  style="top: 314px;left: 672px;width: 50px;" type="number">
         <input class="overlay" name="fiscal-code" required style="top: 362px;left: 146px;width: 576px;">
         <input class="overlay" name="phone-number" required style="top: 410px;left: 100px;width: 225px;" type="tel">
         <input class="overlay" name="email" required style="top: 410px;left: 376px;width: 349px;" type="email">
@@ -37,10 +37,9 @@
         <input class="overlay" name="comp-name" required style="top: 658px;left: 152px;width: 291px;">
         <input class="overlay" name="comp-fiscal-code" required style="top: 658px;left: 545px;width: 176px;">
         <input class="overlay" name="vat" required style="top: 706px;left: 152px;width: 186px;">
-        <input class="overlay" name="pec" required style="top: 706px;left: 374px;width: 349px;" type="email">
-        <input class="overlay" name="comp-email" required style="top: 753px;left: 100px;width: 233px;" type="email">
-        <input class="overlay" name="comp-phone-number" required style="top: 753px;left: 382px;width: 343px;"
-               type="tel">
+        <input class="overlay" name="pec" style="top: 706px;left: 374px;width: 349px;" type="email">
+        <input class="overlay" name="comp-email" style="top: 753px;left: 100px;width: 233px;" type="email">
+        <input class="overlay" name="comp-phone-number" style="top: 753px;left: 382px;width: 343px;" type="tel">
     </div>
     <div class="pdf-page">
         <img alt="PDF Page 2" src="../../resources/template_Richiesta_Adesione_CER_files/page002.jpg">
@@ -65,7 +64,7 @@
         <input class="overlay" name="e-addr-city" required style="top: 732px;left: 186px;width: 106px;">
         <input class="overlay" name="e-addr-prov" required style="top: 732px;left: 332px;width: 26px;">
         <input class="overlay" name="e-addr-street" required style="top: 732px;left: 401px;width: 266px;">
-        <input class="overlay" name="e-addr-num" required style="top: 732px;left: 686px;width: 36px;" type="number">
+        <input class="overlay" name="e-addr-num"  style="top: 732px;left: 686px;width: 36px;" type="number">
         <input class="overlay" name="foglio" style="top: 787px;left: 171px;width: 72px;">
         <input class="overlay" name="particella" style="top: 787px;left: 311px;width: 72px;">
         <input class="overlay" name="subalterno" style="top: 787px;left: 462px;width: 72px;">
@@ -100,12 +99,12 @@
                type="number">
         <input accept=".jpg, .jpeg, .png, .pdf" name="name-document" required
                style="position: absolute;top: 523px;left: 592px;width: 125px;" type="file">
-        <input accept=".jpg, .jpeg, .png, .pdf" name="chamber-doc" required
+        <input accept=".jpg, .jpeg, .png, .pdf" name="chamber-doc"
                style="position: absolute;top: 550px;left: 592px;width: 125px;"
                type="file">
         <input accept=".jpg, .jpeg, .png, .pdf" name="electricity-bill" required
                style="position: absolute;top: 690px;left: 592px;width: 125px;" type="file">
-        <input accept=".jpg, .jpeg, .png, .pdf" name="electricity-bill-prod" required
+        <input accept=".jpg, .jpeg, .png, .pdf" name="electricity-bill-prod"
                style="position: absolute;top: 760px;left: 592px;width: 125px;" type="file">
         <input class="overlay" name="date" style="top: 949px;left: 108px;width: 140px;" type="date" readonly>
         <img src="" alt="" class="signature-preview"
@@ -145,9 +144,9 @@
         <div>
             <button id="clear-form" type="button">Svuota</button>
             <button id="open-signature-modal" type="button">Fi<input accept=".jpg, .jpeg, .png,"
-                                                                              name="signature"
-                                                                              id="signatureFileInput"
-                                                                              required type="file">rma
+                                                                     name="signature"
+                                                                     id="signatureFileInput"
+                                                                     required type="file">rma
             </button>
             <button id="submit-form" type="button">Invia</button>
         </div>
@@ -156,7 +155,7 @@
     <input id="pdf-upload" name="pdf-upload" style="display: none" type="file">
 
 </form>
-<div class="modal " id="signatureModal" role="dialog" tabindex="10" style="display: none">
+<div class="modal" id="signatureModal" role="dialog" tabindex="10" style="display: none">
     <div class="modal-dialog" role="document">
         <button aria-label="Close" class="close close-modal" type="button">
             <span aria-hidden="true">&times;</span>
@@ -174,6 +173,15 @@
                 <button id="saveSignature" type="button">Salva Firma</button>
                 <button id="uploadSignature" type="button">Carica Firma</button>
             </div>
+        </div>
+    </div>
+</div>
+<div class="modal" id="messages" role="dialog" tabindex="10" style="display: none">
+    <div class="modal-dialog" role="document">
+        <button aria-label="Close" class="close close-modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <div class="modal-content" style="display: flex; justify-content: center; align-items: center;">
         </div>
     </div>
 </div>

@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('signatureFileInput').setCustomValidity('Inserisci la tua firma.');
     const today = new Date().toISOString().split('T')[0];
     $('input[name="date"]').val(today);
+    $("#messages .close-modal")[0].addEventListener('click', () => {
+        $("#messages").fadeOut()
+    })
 });
 
 function checkInputValidity() {
@@ -69,18 +72,31 @@ async function extracted() {
 
 
 async function handleSubmit() {
+    const messageModal = $("#messages");
+    const modalClose = $("#messages .close-modal");
+    const messageSection = $("#messages .modal-content")[0];
+
     try {
         checkInputValidity();
     } catch (e) {
         return
     }
+
+    modalClose.fadeOut()
+    messageModal.fadeIn()
+    messageSection.innerHTML = "<p>Attendere prego...</p>";
     await generatePDF();
     try {
         const formObject = await extracted();
         await sendRequest(formObject); // Send the request after files are processed
+        messageSection.innerHTML = "<p>La tua richiesta è stata inviata con successo!</p>" + "<p>Un responsabile ti contatterà presto per procedere con la richiesta di adesione.</p>" + "<p>Puoi chiudere questa pagina..</p>" + "<p>Grazie per la tua partecipazione.</p>";
+        modalClose.fadeIn()
     } catch (error) {
+        messageSection.innerHTML = "<p>Si è verificato un errore durante l'elaborazione della tua richiesta.</p>" + "<p>Per favore, riprova più tardi.</p>";
+        modalClose.fadeIn()
         console.error('Form submission error:', error);
     }
+
 }
 
 
