@@ -22,6 +22,9 @@ $(function () {
                 input.removeEventListener("change", handler);
                 resolve(input.files);
             };
+            input.addEventListener("click", e => {
+                e.stopPropagation();
+            });
             input.addEventListener("change", handler);
             input.click();
         });
