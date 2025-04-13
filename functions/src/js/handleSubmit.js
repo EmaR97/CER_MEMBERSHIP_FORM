@@ -82,18 +82,22 @@ async function handleSubmit() {
 
 
 function getToHide() {
-    return [$('button'), $('input[type="file"]'), $('.pdf-page')];
+    return [$('button'), $('input[type="file"]'), $('.pdf-page'), $(".signature-container div"), $(".signature-container img")];
 }
 
 function cleanStyle() {
-    const [button, input_files, pdfPage] = getToHide();
+    const [button, input_files, pdfPage, signCanvas, signImage] = getToHide();
+    signImage.show()
+    signCanvas.hide()
     button.hide();
     input_files.hide();
     pdfPage.css({margin: '0 auto', 'box-shadow': 'none'});
 }
 
 function restoreStyle() {
-    const [button, input_files, pdfPage] = getToHide();
+    const [button, input_files, pdfPage, signCanvas, signImage] = getToHide();
+    signImage.hide()
+    signCanvas.show()
     input_files.show();
     button.show();
     pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
