@@ -80,22 +80,35 @@ async function handleSubmit() {
     }
 }
 
+
+function getToHide() {
+    return [$('button'), $('input[type="file"]'), $('.pdf-page')];
+}
+
+function cleanStyle() {
+    const [button, input_files, pdfPage] = getToHide();
+    button.hide();
+    input_files.hide();
+    pdfPage.css({margin: '0 auto', 'box-shadow': 'none'});
+}
+
+function restoreStyle() {
+    const [button, input_files, pdfPage] = getToHide();
+    input_files.show();
+    button.show();
+    pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
+}
+
 const opt = {html2canvas: {scale: 2}};
 
 function generatePDF() {
     return new Promise((resolve, reject) => {
-        const [button, input_files, pdfPage] = [$('button'), $('input[type="file"]'), $('.pdf-page')];
-        button.hide();
-        input_files.hide();
-        pdfPage.css({margin: '0 auto', 'box-shadow': 'none'});
-
+        cleanStyle()
         html2pdf().set(opt).from(document.body).outputPdf('blob').then(blob => {
             const dt = new DataTransfer();
             dt.items.add(new File([blob], 'page.pdf', {type: 'application/pdf'}));
             document.getElementById('pdf-upload').files = dt.files;
-            input_files.show();
-            button.show();
-            pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
+            restoreStyle()
             resolve();
         }).catch(reject);
     });
