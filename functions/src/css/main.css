@@ -15,7 +15,7 @@
 }
 
 body {
-    background-color: #f5f5dc;
+    background-color: rgba(205, 205, 205, 0.7);;
     margin: 0;
     font-family: sans-serif;
 }
@@ -27,7 +27,7 @@ body {
     max-width: 800px;
     min-width: 800px;
     height: 1120px;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
 }
 
 .pdf-page img {
@@ -100,39 +100,46 @@ input[type="radio"].square-radio:checked::before {
     background-color: black;
 }
 
+.form-buttons {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .form-buttons button {
     width: 100px;
     margin: 0 10px;
     padding: 10px 20px;
     font-size: 16px;
     cursor: pointer;
-    color: white;
-    border: none;
     border-radius: 5px;
+    font-weight: bold;
 }
 
-#submit-form {
-    background-color: green;
+
+#signatureFileInput {
+    height: 1px;
+    opacity: 0;
+    width: 1px;
 }
 
-#clear-form {
-    background-color: darkred;
+input[name="date"] {
+    pointer-events: none;
+    background-color: transparent;
+    border: none;
 }
 
-#submit-form:hover {
-    background-color: #45a049;
-}
-
-#clear-form:hover {
-    background-color: red;
-}
-
-.form-buttons button:focus {
-    outline: none;
+.form-buttons button:hover {
+    background-color: lightgray;
 }
 
 .signature canvas {
     background-color: rgba(170, 170, 170, 0.15);
     border: 2px dashed #007BFF;
     border-radius: 4px;
+}
+
+.hidden {
+    display: none !important;
 }

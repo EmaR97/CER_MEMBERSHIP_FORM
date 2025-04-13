@@ -7,6 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('submit-form').addEventListener('click', () => {
         handleSubmit();
     });
+    document.getElementById('signatureFileInput').setCustomValidity('Inserisci la tua firma.');
+    const today = new Date().toISOString().split('T')[0];
+    $('input[name="date"]').val(today);
 });
 
 function checkInputValidity() {
@@ -90,7 +93,7 @@ function cleanStyle() {
     signImage.show()
     signCanvas.hide()
     button.hide();
-    input_files.hide();
+    input_files.addClass('hidden');
     pdfPage.css({margin: '0 auto', 'box-shadow': 'none'});
 }
 
@@ -98,7 +101,7 @@ function restoreStyle() {
     const [button, input_files, pdfPage, signCanvas, signImage] = getToHide();
     signImage.hide()
     signCanvas.show()
-    input_files.show();
+    input_files.removeClass('hidden');
     button.show();
     pdfPage.css({margin: '20px auto', 'box-shadow': '0 0 8px rgba(0,0,0,0.2)'});
 }
