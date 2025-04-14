@@ -82,10 +82,10 @@ async function handleSubmit() {
         return
     }
 
+    await generatePDF();
     modalClose.fadeOut()
     messageModal.fadeIn()
     messageSection.innerHTML = "<p>Attendere prego...</p>";
-    await generatePDF();
     try {
         const formObject = await extracted();
         await sendRequest(formObject); // Send the request after files are processed

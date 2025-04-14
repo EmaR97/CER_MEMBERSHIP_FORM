@@ -2,7 +2,6 @@ import {onRequest} from "firebase-functions/v2/https";
 import {initializeApp} from "firebase-admin/app";
 import {getFirestore} from "firebase-admin/firestore";
 import {getStorage} from "firebase-admin/storage";
-import {parseFormData} from "./FormData"
 
 initializeApp();
 
@@ -67,10 +66,9 @@ export const uploadForm = onRequest(async (req, res) => {
                 });
         }
 
-        const data = parseFormData(parsedBody.fields);
 
         await getFirestore()
-            .collection(COLLECTION).doc(id).set(data);
+            .collection(COLLECTION).doc(id).set(parsedBody.fields);
 
         res.status(200).send('{}')
     } catch (error) {

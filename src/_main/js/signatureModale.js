@@ -62,6 +62,7 @@ $(function () {
         }
         const reader = new FileReader();
         reader.onload = event => $targetImg.attr("src", event.target.result);
+        $targetImg.fadeIn(1);
         reader.readAsDataURL(files[0]);
         closeModal();
     }
