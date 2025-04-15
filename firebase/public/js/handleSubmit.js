@@ -1,4 +1,5 @@
 const URL_FUNCTIONS = 'https://us-central1-cer-membership-form-aca75.cloudfunctions.net/uploadForm';
+// const URL_FUNCTIONS = 'http://127.0.0.1:5001/cer-membership-form-aca75/us-central1/uploadForm';
 
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('clear-form').addEventListener('click', () => {

@@ -58,6 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form?.addEventListener("change", () => {
         saveFormToSession(form);
-        // loadFormFromSession(form);
+        loadFormFromSession(form);
     });
 });

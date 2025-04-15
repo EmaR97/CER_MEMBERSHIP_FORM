@@ -36,9 +36,10 @@ body {
 
 #pod-code {
     position: absolute;
+    font-family: "Courier New", monospace;
     font-size: x-large;
-    letter-spacing: 27px;
-    justify-content: flex-start;
+    letter-spacing: 26px;
+    top: 2px;
     width: 550px;
     height: 38px;
     background-color: rgba(0, 0, 0, 0);
@@ -58,20 +59,22 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 2px dashed rgba(170, 170, 170, 0.4);
+    border: 2px dashed rgba(170, 170, 170, 0.6);
+    background-color: rgba(200, 200, 200, .5); /* Light gray */
+
     color: #000;
     pointer-events: auto; /* Enable interaction */
     cursor: text;
 }
 
 .overlay[disabled] {
-    background-color: rgba(200, 200, 200, 0.3); /* Light gray */
+    background-color: rgba(170, 170, 170, .8); /* Light gray */
     pointer-events: none;
     cursor: not-allowed;
 }
 
 .overlay[disabled][type="radio"] {
-    background-color: rgba(235, 235, 235, 1) !important;; /* Light gray */
+    background-color: rgba(170, 170, 170, 1) !important;; /* Light gray */
 }
 
 input[required] {
