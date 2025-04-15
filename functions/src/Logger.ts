@@ -1,47 +1,60 @@
-// Logger.ts
-
 export enum LogLevel {
-    DEBUG = 0,
-    INFO = 1,
-    WARN = 2,
-    ERROR = 3,
+    DEBUG = 0, INFO, WARN, ERROR,
 }
 
 export class Logger {
-    // Set the log level you want. Only messages at this level or higher will be printed.
     private static currentLevel: LogLevel = LogLevel.DEBUG;
 
-    // Allows dynamic log level changes at runtime
-    public static setLevel(level: LogLevel) {
+    // Allows dynamic log level changes
+    public static setLevel(level: LogLevel): void {
         Logger.currentLevel = level;
     }
 
-    private static log(levelLabel: string, message: string, ...optionalParams: any[]) {
-        const timestamp = new Date().toISOString();
-        console.log(`[${timestamp}] ${levelLabel}: ${message}`, ...optionalParams);
+    public static debug(msg: string, ...params: unknown[]): void {
+        Logger.log(LogLevel.DEBUG, "DEBUG", msg, ...params);
     }
 
-    public static debug(message: string, ...optionalParams: any[]) {
-        if (Logger.currentLevel <= LogLevel.DEBUG) {
-            Logger.log("DEBUG", message, ...optionalParams);
+    public static info(msg: string, ...params: unknown[]): void {
+        Logger.log(LogLevel.INFO, "INFO", msg, ...params);
+    }
+
+    public static warn(msg: string, ...params: unknown[]): void {
+        Logger.log(LogLevel.WARN, "WARN", msg, ...params);
+    }
+
+    public static error(msg: string, ...params: unknown[]): void {
+        Logger.log(LogLevel.ERROR, "ERROR", msg, ...params);
+    }
+
+    private static log(level: LogLevel, label: string, msg: string, ...params: unknown[]): void {
+        if (Logger.currentLevel <= level) {
+            const timestamp = new Date().toISOString();
+            // By skipping Logger.log, we capture the caller one level above log()
+            const callerInfo = Logger.getCallerInfo();
+            console.log(`[${timestamp}] ${label}: ${msg} ${callerInfo}`, ...params);
         }
     }
 
-    public static info(message: string, ...optionalParams: any[]) {
-        if (Logger.currentLevel <= LogLevel.INFO) {
-            Logger.log("INFO", message, ...optionalParams);
+    /**
+     * Extracts the caller information in an efficient manner.
+     *
+     * Uses Error.captureStackTrace (when available) to skip Logger.log (and related internal calls)
+     * so that the first frame corresponds to the location where the logger was invoked.
+     */
+    private static getCallerInfo(): string {
+        let stack = (Error as any).captureStackTrace
+            ? ((() => { const obj: { stack?: string } = {}; (Error as any).captureStackTrace(obj, Logger.log); return obj.stack; })())
+            : new Error().stack;
+
+        if (!stack) return "";
+
+        const lines = stack.split('\n');
+        // Start from index 2 to skip the error message and Logger.log frame.
+        for (let i = 2; i < lines.length; i++) {
+            const line = lines[i].trim();
+            if (line) return `(${line})`;
         }
+        return "";
     }
 
-    public static warn(message: string, ...optionalParams: any[]) {
-        if (Logger.currentLevel <= LogLevel.WARN) {
-            Logger.log("WARN", message, ...optionalParams);
-        }
-    }
-
-    public static error(message: string, ...optionalParams: any[]) {
-        if (Logger.currentLevel <= LogLevel.ERROR) {
-            Logger.log("ERROR", message, ...optionalParams);
-        }
-    }
 }
