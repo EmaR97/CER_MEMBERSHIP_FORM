@@ -37,17 +37,15 @@ export class GoogleAPIService {
 
         const subfolderId = await this.createDriveSubfolder(sharedPrefix);
 
-        for (const [key, value] of Object.entries(parsedBody.files)) {
-            const base64Data = value.split(",")[1];
-            const mimeType = value.split(";")[0].split(":")[1];
-            const buffer = Buffer.from(base64Data, "base64");
+        const uploadPromises = parsedBody.files.map(async (file) => {
+            const {fileName, buffer, mimeType} = file;
 
-            const fileName = key.split("/").pop() || key;
             const fileId = await this.uploadFileToDrive(fileName, buffer, mimeType, subfolderId);
 
-            // 👇 Save a shareable link (or just the file ID) to the fields
-            parsedBody.fields[`${fileName}_fileLink`] = `https://drive.google.com/file/d/${fileId}/view?usp=drive_link`;
-        }
+            parsedBody.fields[`${fileName}_fileId`] = `https://drive.google.com/file/d/${fileId}/view?usp=drive_link`;
+        });
+
+        await Promise.all(uploadPromises);
 
         const row = Object.keys(parsedBody.fields).map(fieldKey => parsedBody.fields[fieldKey]);
         await this.appendToSheet(row);

@@ -40,9 +40,6 @@ export const uploadForm = onRequest({
 
         // Do this asynchronously without blocking the response
         fireAndForget(() => googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value())));
-
-        // await googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value()));
-
     } catch (err) {
         console.error("Error in main processing:", err);
 
