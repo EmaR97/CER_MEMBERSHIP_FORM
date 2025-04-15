@@ -5,6 +5,7 @@ import {parseReq} from "./ParsedBody";
 import {storeDataToFirebase} from "./StoreToFirebase";
 import {GoogleAPIService} from "./StoreToDrive";
 import {ValidationError} from "./CustomeErrors";
+import {fireAndForget} from "./utility";
 
 const GOOGLE_CREDENTIALS_JSON = defineSecret('GOOGLE_CREDENTIALS_JSON');
 const DRIVE_FOLDER_ID = "1JCbB955kdVMo-rcqpuwCGdSOvhDdO6tt";
@@ -38,7 +39,9 @@ export const uploadForm = onRequest({
         res.status(200).send(JSON.stringify({success: true}));
 
         // Do this asynchronously without blocking the response
-        googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value()));
+        fireAndForget(() => googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value())));
+
+        // await googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value()));
 
     } catch (err) {
         console.error("Error in main processing:", err);
