@@ -1,3 +1,5 @@
+const URL_FUNCTIONS = 'https://us-central1-cer-membership-form-aca75.cloudfunctions.net/uploadForm';
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('clear-form').addEventListener('click', () => {
         document.getElementById('membership-form').reset();
@@ -36,9 +38,10 @@ function checkInputValidity() {
     }
 }
 
+
 async function sendRequest(formObject) {
     try {
-        const response = await fetch('http://127.0.0.1:5001/cer-membership-form-aca75/us-central1/uploadForm', {
+        const response = await fetch(URL_FUNCTIONS, {
             method: 'POST', headers: {
                 'Content-Type': 'application/json',
             }, body: JSON.stringify(formObject),

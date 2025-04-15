@@ -3,3 +3,7 @@
 /node_modules/
 *.log
 /cer-membership-form-aca75-1cbf19421c6a.json
+/firebase/cer-membership-form-aca75-1cbf19421c6a.json
+/firebase/package-lock.json
+/firebase/functions/package-lock.json
+/firebase/package.json

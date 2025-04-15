@@ -3,7 +3,7 @@ import {getStorage} from "firebase-admin/storage";
 import {getFirestore} from "firebase-admin/firestore";
 import {Logger} from "./Logger"; // Make sure Logger.ts is in the same directory or update the path
 
-const BUCKET = "files";
+const BUCKET = "cer-membership-form-aca75.firebasestorage.app";
 const COLLECTION = "data";
 
 export async function storeDataToFirebase(parsedBody: ParsedBody) {
