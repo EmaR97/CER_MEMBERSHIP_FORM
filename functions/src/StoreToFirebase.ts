@@ -18,16 +18,16 @@ export async function storeDataToFirebase(parsedBody: ParsedBody) {
       Logger.debug(`Preparing upload [${index}]:`, {fullPath, mimeType});
 
       return getStorage()
-          .bucket(BUCKET)
-          .file(fullPath)
-          .save(buffer, {
-            contentType: mimeType, public: true,
-          })
-          .then(() => Logger.info(`Uploaded file: ${fullPath}`))
-          .catch((err) => {
-            Logger.error(`Failed to upload file: ${fullPath}`, err);
-            throw err;
-          });
+        .bucket(BUCKET)
+        .file(fullPath)
+        .save(buffer, {
+          contentType: mimeType, public: true,
+        })
+        .then(() => Logger.info(`Uploaded file: ${fullPath}`))
+        .catch((err) => {
+          Logger.error(`Failed to upload file: ${fullPath}`, err);
+          throw err;
+        });
     });
 
     // Firestore write promise
@@ -35,14 +35,14 @@ export async function storeDataToFirebase(parsedBody: ParsedBody) {
     Logger.debug("Preparing Firestore write for document ID:", docId);
 
     const firestorePromise = getFirestore()
-        .collection(COLLECTION)
-        .doc(docId)
-        .set(parsedBody.fields)
-        .then(() => Logger.info(`Saved Firestore document: ${docId}`))
-        .catch((err) => {
-          Logger.error(`Failed to save Firestore document: ${docId}`, err);
-          throw err;
-        });
+      .collection(COLLECTION)
+      .doc(docId)
+      .set(parsedBody.fields)
+      .then(() => Logger.info(`Saved Firestore document: ${docId}`))
+      .catch((err) => {
+        Logger.error(`Failed to save Firestore document: ${docId}`, err);
+        throw err;
+      });
 
     // Run everything in parallel
     await Promise.all([...uploadPromises, firestorePromise]);

@@ -35,12 +35,6 @@ export class Logger {
     }
   }
 
-  /**
-     * Extracts the caller information in an efficient manner.
-     *
-     * Uses Error.captureStackTrace (when available) to skip Logger.log (and related internal calls)
-     * so that the first frame corresponds to the location where the logger was invoked.
-     */
   private static getCallerInfo(): string {
     const stack = (Error as any).captureStackTrace ?
       ((() => {
