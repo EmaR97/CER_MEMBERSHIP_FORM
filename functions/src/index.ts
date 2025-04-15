@@ -3,14 +3,14 @@ import {initializeApp} from "firebase-admin/app";
 import {defineSecret} from "firebase-functions/params";
 import {parseReq} from "./ParsedBody";
 import {storeDataToFirebase} from "./StoreToFirebase";
-import {GoogleAPIService} from "./StoreToDrive";
+import {GoogleApiService} from "./StoreToDrive";
 import {ValidationError} from "./CustomeErrors";
 import {fireAndForget} from "./utility";
 
 const GOOGLE_CREDENTIALS_JSON = defineSecret('GOOGLE_CREDENTIALS_JSON');
 const DRIVE_FOLDER_ID = "1JCbB955kdVMo-rcqpuwCGdSOvhDdO6tt";
 const SHEET_ID = "1Rf15O4o3rUJJ-nhpBoKMHN-bNFSfE4el4rBGEt3x6MU";
-const googleAPIService = new GoogleAPIService(DRIVE_FOLDER_ID, SHEET_ID);
+const googleAPIService = new GoogleApiService(DRIVE_FOLDER_ID, SHEET_ID);
 
 initializeApp();
 
@@ -39,7 +39,7 @@ export const uploadForm = onRequest({
         res.status(200).send(JSON.stringify({success: true}));
 
         // Do this asynchronously without blocking the response
-        fireAndForget(() => googleAPIService.storeDataToDrive(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value())));
+        fireAndForget(() => googleAPIService.uploadData(parsedBody, JSON.parse(GOOGLE_CREDENTIALS_JSON.value())));
     } catch (err) {
         console.error("Error in main processing:", err);
 
