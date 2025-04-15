@@ -2,8 +2,11 @@ import {onRequest} from "firebase-functions/v2/https";
 import {initializeApp} from "firebase-admin/app";
 import {getFirestore} from "firebase-admin/firestore";
 import {getStorage} from "firebase-admin/storage";
-import {google} from "googleapis";
 import {Readable} from "stream";
+import {defineSecret} from "firebase-functions/params";
+import {Auth as googleAuth, drive_v3, google, sheets_v4} from 'googleapis';
+
+const GOOGLE_CREDENTIALS_JSON = defineSecret('GOOGLE_CREDENTIALS_JSON');
 
 initializeApp();
 
@@ -38,7 +41,9 @@ const COLLECTION = "data";
 
 // Main Cloud Function: The essential work is done before sending the response.
 // The noncritical tasks are kicked off afterward using the fire-and-forget helper.
-export const uploadForm = onRequest(async (req, res) => {
+export const uploadForm = onRequest({
+    secrets: [GOOGLE_CREDENTIALS_JSON],
+}, async (req, res) => {
     try {
         if (req.method !== "POST") {
             res.status(405).send(JSON.stringify({error: {message: "Method Not Allowed"}}));
@@ -84,6 +89,7 @@ export const uploadForm = onRequest(async (req, res) => {
 });
 
 function copyToDrive(parsedBody: ParsedBody) {
+    getAuthClient()
     // Now run background tasks asynchronously:
     // 1. Upload files to Google Drive.
     for (const [key, value] of Object.entries(parsedBody.files)) {
@@ -101,15 +107,23 @@ function copyToDrive(parsedBody: ParsedBody) {
 
 }
 
-// const credentials = JSON.parse(process.env.GOOGLE_CREDENTIALS_JSON || '{}');
-// Authenticate using JWT
-const auth = new google.auth.GoogleAuth({
-    keyFile: '../cer-membership-form-aca75-1cbf19421c6a.json',
+let auth: googleAuth.GoogleAuth | null = null;
+let drive: drive_v3.Drive | null = null;
+let sheets: sheets_v4.Sheets | null = null;
 
-    scopes: ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets'],
-});
-const drive = google.drive({version: "v3", auth});
-const sheets = google.sheets({version: "v4", auth});
+
+// Lazy getter for the auth client.
+function getAuthClient() {
+    if (!auth) {
+        auth = new google.auth.GoogleAuth({
+            credentials: JSON.parse(GOOGLE_CREDENTIALS_JSON.value()),
+            scopes: ['https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/spreadsheets'],
+        });
+        drive = google.drive({version: "v3", auth});
+        sheets = google.sheets({version: "v4", auth});
+    }
+}
+
 
 // Set these IDs from your project configurations.
 const DRIVE_FOLDER_ID = "1JCbB955kdVMo-rcqpuwCGdSOvhDdO6tt";
@@ -120,7 +134,7 @@ async function uploadToDrive(fileName: string, fileBuffer: Buffer, mimeType: str
         // Convert the Buffer into a Readable stream
         const stream = Readable.from(fileBuffer);
 
-        const response = await drive.files.create({
+        const response = await drive!.files.create({
             requestBody: {
                 name: fileName, parents: [DRIVE_FOLDER_ID], mimeType,
             }, media: {
@@ -137,7 +151,7 @@ async function uploadToDrive(fileName: string, fileBuffer: Buffer, mimeType: str
 // Helper function to append data to a Google Sheet.
 async function appendToSheet(row: any[]): Promise<void> {
     try {
-        const response = await sheets.spreadsheets.values.append({
+        const response = await sheets!.spreadsheets.values.append({
             spreadsheetId: SHEET_ID, range: "Sheet1!A1", // Change according to your target range.
             valueInputOption: "RAW", requestBody: {
                 values: [row],
